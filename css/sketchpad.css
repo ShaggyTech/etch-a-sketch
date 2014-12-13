@@ -1,0 +1,11 @@
+#sketchpad {
+    margin: auto;
+    width: 720px;
+    height: 720px;
+}
+
+.square {
+    float: left;
+    background-color: #c9c9c9;
+    outline: black solid 1px;
+}
