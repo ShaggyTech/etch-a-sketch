@@ -12,12 +12,20 @@ function createSketchpad(width) {
 }
 
 function squareSelect() {
-    $(".square").mouseenter(function(){
-        $(this).css("background-color", "blue");
+    $(".square").hover(function(){
+        $(this).addClass("square-normal");
     });
 }
+
+function clearBoard() {
+    $(".square").removeClass("square-normal");
+}
+
 
 $(document).ready(function(){
     createSketchpad(sketchpadWidth);
     squareSelect();
+    $(".clear-button").on("click", function(){
+        clearBoard();
+    });
 });

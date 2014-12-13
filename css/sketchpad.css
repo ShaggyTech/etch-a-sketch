@@ -9,3 +9,18 @@
     background-color: #c9c9c9;
     outline: black solid 1px;
 }
+
+.square-normal {
+    background-color: blue;
+}
+
+#options {
+    padding: 20px 20px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+button{
+    position: relative;
+}
