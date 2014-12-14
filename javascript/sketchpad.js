@@ -16,7 +16,7 @@ function createSketchpad(width) {
     $(".square").css("height", squareSize);
 }
 
-// disables the board when the mouse leaves the sketchpad
+// disables the board when the cursor leaves the sketchpad
 function disableBoardColorChange() {
     $("#sketchpad").mouseleave(function(){
         $(".square").off();
@@ -51,23 +51,30 @@ function randomColor(){
     return hue;
 }
 
-// clear the board, revert to default colors
+// clear the board, revert to default square color
 function clearBoard() {
     $(".square").css("background-color", "#DEDEDE");
 }
 
-//
+// selects the color change on the squares based on the currently selected mode
 function drawMode() {
     if (currentDrawMode === "defaultSquares") {
+        $(".dropdown-menu > li").show();
+        $(".default").hide();
+        $("#mode-menu-text").text("Draw Mode: Default");
         clearBoard();
         squareDefault();
     }
     else if (currentDrawMode === "randomSquares") {
+        $(".dropdown-menu > li").show();
+        $(".random").hide();
+        $("#mode-menu-text").text("Draw Mode: Random Colors");
         clearBoard();
         squareRandomColors();
     };
 }
 
+// change the draw mode when a "Draw Mode" menu item is selected
 function changeDrawMode() {
     $(".default").on("click", function(){
         currentDrawMode = "defaultSquares";
