@@ -17,8 +17,10 @@ function createSketchpad(width) {
 
 // changes the background color of the squares when the cursor touches them (change the color by editing sketchpad.css)
 function squareChange() {
-    $(".square").hover(function(){
-        $(this).addClass("square-normal");
+    $("#sketchpad").on("mousedown", function(){
+        $(".square").hover(function(){
+            $(this).addClass("square-normal");
+        });
     });
 }
 
@@ -55,13 +57,12 @@ function changeSize(width) {
     createSketchpad(width);   
 }
 
-// listeners
 function listeners() {
     // draws the sketchpad and takes the sketchpadWidth as input
     createSketchpad(sketchpadWidth);
     
     // changes the color of the squares on mouseover (default function)
-    squareChange();
+    squareChange()
     
     // clears the board to default state when the "Clear Board" button is pressed
     $(".clear-button").on("click", function(){
@@ -73,7 +74,7 @@ function listeners() {
         getNewSize();
     });
     
-    // necessary to make the bootstrap buttons clear the active state immediately after clicking them
+    // necessary to make the bootstrap buttons remove the active state class immediately after clicking them
     $(".btn").on("mouseup", function(){
         $(this).blur();
     });
@@ -81,4 +82,4 @@ function listeners() {
 
 $(document).ready(function(){
     listeners();
-});
+})

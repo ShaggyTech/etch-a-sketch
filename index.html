@@ -12,10 +12,25 @@
  </head>
  
  <body>
-    <div id="options">
-        <button type="button" class="btn btn-primary size-button">Change Board Size</button>
-        <button type="button" class="btn btn-primary clear-button">Clear Board</button>
-    </div>
+    <div class="menu">
+        <div class="btn-group" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                Draw Mode: Default
+                <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Random Colors</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Incremental</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave a trail</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg size-button">Change Board Size</button>
+            <button type="button" class="btn btn-danger btn-lg clear-button">Clear Board</button>
+            
+        </div>
+    </div>  
+    
     <div id="sketchpad">
         <!-- squares will be added here -->
     </div>

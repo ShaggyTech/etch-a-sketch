@@ -14,11 +14,14 @@
     background-color: blue;
 }
 
-#options {
-    padding: 20px 20px;
+.menu {
+    padding: 10px;
     width: 100%;
     height: 100%;
     text-align: center;
+}
+.menu-group {
+    float: left;
 }
 
 button{
