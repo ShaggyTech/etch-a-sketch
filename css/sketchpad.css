@@ -1,3 +1,9 @@
+body {
+    background-color: #0f0f0f;
+    background-image: url('../img/ios-linen.jpg');
+    color:#ffffff;
+}
+
 #sketchpad {
     margin: auto;
     width: 720px;
@@ -24,6 +30,8 @@
     float: left;
 }
 
-button{
-    position: relative;
+.instructions {
+    text-align: center;
+    height: 35px;
+    margin: auto;
 }

@@ -15,12 +15,19 @@ function createSketchpad(width) {
     $(".square").css("height", squareSize);
 }
 
-// changes the background color of the squares when the cursor touches them (change the color by editing sketchpad.css)
+// changes the color of the squares when the cursor touches them
 function squareChange() {
-    $("#sketchpad").on("mousedown", function(){
+    // keeps the squares from changing unless focus is on the sketchpad
+    // also hides the instructions once the sketchpad is active
+    $("#sketchpad").mousedown(function(){
         $(".square").hover(function(){
             $(this).addClass("square-normal");
+            $(".instructions-text").hide();
         });
+    });
+    $("#sketchpad").mouseleave(function(){
+        $(".square").off();
+        $(".instructions-text").show();
     });
 }
 
