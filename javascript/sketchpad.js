@@ -55,7 +55,8 @@ function changeSize(width) {
     createSketchpad(width);   
 }
 
-$(document).ready(function(){
+// listeners
+function listeners() {
     // draws the sketchpad and takes the sketchpadWidth as input
     createSketchpad(sketchpadWidth);
     
@@ -76,4 +77,8 @@ $(document).ready(function(){
     $(".btn").on("mouseup", function(){
         $(this).blur();
     });
+}
+
+$(document).ready(function(){
+    listeners();
 });
