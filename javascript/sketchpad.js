@@ -1,5 +1,6 @@
 var sketchpadWidth = 16;  // default sketchpad width
 var newSize;
+var currentDrawMode = "defaultSquares";
 
 // builds the sketchpad
 function createSketchpad(width) {
@@ -55,6 +56,31 @@ function clearBoard() {
     $(".square").css("background-color", "#DEDEDE");
 }
 
+//
+function drawMode() {
+    if (currentDrawMode === "defaultSquares") {
+        clearBoard();
+        squareDefault();
+    }
+    else if (currentDrawMode === "randomSquares") {
+        clearBoard();
+        squareRandomColors();
+    };
+}
+
+function changeDrawMode() {
+    $(".default").on("click", function(){
+        currentDrawMode = "defaultSquares";
+        drawMode();
+    });
+    
+    $(".random").on("click", function(){
+        currentDrawMode = "randomSquares";
+        drawMode();
+    });
+}
+//
+
 // get the new size, input by the user by clicking the "Change Board Size" button
 function getNewSize(newSize) {
     newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
@@ -73,14 +99,13 @@ function getNewSize(newSize) {
     else {
         changeSize(newSize);
     };
-    // TODO!
-    squareDefault();
+    drawMode();
 }
 
 // change the board size
 function changeSize(width) {
     $("#sketchpad").empty();
-    createSketchpad(width);   
+    createSketchpad(width);
 }
 
 function listeners() {
@@ -88,7 +113,10 @@ function listeners() {
     createSketchpad(sketchpadWidth);
     
     // changes the color of the squares on mouseover (default function)
-    squareDefault()
+    drawMode();
+    
+    // listens for clicks on the draw mode drop-down menu
+    changeDrawMode();
     
     // clears the board to default state when the "Clear Board" button is pressed
     $(".clear-button").on("click", function(){
