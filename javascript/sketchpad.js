@@ -38,7 +38,7 @@ function clearBoard() {
 
 // get the new size, input by the user by clicking the "Change Board Size" button
 function getNewSize(newSize) {
-    newSize = prompt("Please enter a new size for the sketch board (1 to 64).\nLeave blank for default size.");
+    newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
     // if the prompt is left blank then resize to default size
     if (newSize === null) {
         return;
