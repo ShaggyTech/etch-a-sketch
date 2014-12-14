@@ -8,6 +8,7 @@ body {
     margin: auto;
     width: 720px;
     height: 720px;
+    cursor: crosshair;
 }
 
 .square {

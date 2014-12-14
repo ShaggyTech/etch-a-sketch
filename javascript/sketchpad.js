@@ -1,6 +1,6 @@
-// default sketchpadWidth
-var sketchpadWidth = 16;
+var sketchpadWidth = 16;  // default sketchpad width
 var newSize;
+
 // builds the sketchpad
 function createSketchpad(width) {
     var squareSize = $("#sketchpad").width() / width;
@@ -15,25 +15,44 @@ function createSketchpad(width) {
     $(".square").css("height", squareSize);
 }
 
-// changes the color of the squares when the cursor touches them
-function squareChange() {
-    // keeps the squares from changing unless focus is on the sketchpad
-    // also hides the instructions once the sketchpad is active
-    $("#sketchpad").mousedown(function(){
-        $(".square").hover(function(){
-            $(this).addClass("square-normal");
-            $(".instructions-text").hide();
-        });
-    });
+// disables the board when the mouse leaves the sketchpad
+function disableBoardColorChange() {
     $("#sketchpad").mouseleave(function(){
         $(".square").off();
         $(".instructions-text").show();
     });
 }
 
+function squareDefault() {
+    $("#sketchpad").mousedown(function(){
+        $(".square").hover(function(){
+            $(this).css("background-color", "blue");
+            $(".instructions-text").hide();
+        });
+    });
+    disableBoardColorChange();
+}
+
+function squareRandomColors() {
+    $("#sketchpad").mousedown(function(){
+        $(".square").hover(function(){
+            var color = randomColor(); 
+            $(this).css("background-color", color);
+            $(".instructions-text").hide();
+        });
+    });
+    disableBoardColorChange();
+}
+
+// generate a random color
+function randomColor(){
+    var hue = "rgb(" + (Math.floor(Math.random() * 256)) + "," + (Math.floor(Math.random() * 256)) + "," + (Math.floor(Math.random() * 256)) + ")";
+    return hue;
+}
+
 // clear the board, revert to default colors
 function clearBoard() {
-    $(".square").removeClass("square-normal");
+    $(".square").css("background-color", "#DEDEDE");
 }
 
 // get the new size, input by the user by clicking the "Change Board Size" button
@@ -55,7 +74,7 @@ function getNewSize(newSize) {
         changeSize(newSize);
     };
     // TODO!
-    squareChange();
+    squareDefault();
 }
 
 // change the board size
@@ -69,7 +88,7 @@ function listeners() {
     createSketchpad(sketchpadWidth);
     
     // changes the color of the squares on mouseover (default function)
-    squareChange()
+    squareDefault()
     
     // clears the board to default state when the "Clear Board" button is pressed
     $(".clear-button").on("click", function(){
