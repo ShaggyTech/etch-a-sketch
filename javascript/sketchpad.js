@@ -4,13 +4,15 @@ var sketchpadWidth = 16;
 // builds the sketchpad
 function createSketchpad(width) {
     var squareSize = $("#sketchpad").width() / width;
+    var sketchpad = [];
     for (x = 0; x < width; x++) {
         for (i = 0; i < width; i++) {
-            $("#sketchpad").append("<div class='square'></div>")
+        sketchpad += "<div class='square'></div>";
         };
-        $(".square").css("width", squareSize);
-        $(".square").css("height", squareSize);
     };
+    $("#sketchpad").append(sketchpad);
+    $(".square").css("width", squareSize);
+    $(".square").css("height", squareSize);
 }
 
 // changes the background color of the squares when the cursor touches them (change the color by editing sketchpad.css)
