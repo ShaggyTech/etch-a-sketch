@@ -1,6 +1,6 @@
 var sketchpadWidth = 16;  // default sketchpad width
 var newSize;
-var currentDrawMode = 1;
+var currentDrawMode = "defaultSquares";
 
 // builds the sketchpad
 function createSketchpad(width) {
@@ -24,107 +24,25 @@ function disableBoardColorChange() {
     });
 }
 
-// clear the board, revert to default square color
-function clearBoard() {
-    $("#sketchpad").empty();
-    createSketchpad(sketchpadWidth);
-}
-
-// selects the color change on the squares based on the currently selected mode
-function drawMode(mode) {
-    switch(mode) 
-    {
-        case 1: $(".dropdown-menu > li").show();
-                $(".default").hide();
-                $("#mode-menu-text").text("Draw Mode: Default");
-                clearBoard();
-                $("#sketchpad").on("mousedown", function(){
-                    $(".square").on("mouseover", function(){
-                        $(this).css("background-color", "blue");
-                        $(".instructions-text").hide();
-                    });
-                });
-                disableBoardColorChange();
-                break;
-
-        case 2: $(".dropdown-menu > li").show();
-                $(".random").hide();
-                $("#mode-menu-text").text("Draw Mode: Random Colors");
-                clearBoard();
-                $("#sketchpad").on("mousedown", function(){
-                    $(".square").on("mouseover", function(){
-                        var color = randomColor();
-                        $(this).css("background-color", color);
-                        $(".instructions-text").hide();
-                    });
-                });
-                disableBoardColorChange();
-                break;
-
-        case 3: $(".dropdown-menu > li").show();
-                $(".increment").hide();
-                $("#mode-menu-text").text("Draw Mode: Incremental Opacity");
-                clearBoard();
-                $("#sketchpad").on("mousedown", function(){
-                    $(".square").on("mouseover", function(){
-                        $(this).css({"background-color": "blue", "opacity": $(this).css("opacity") * 0.75});
-                        $(".instructions-text").hide();
-                    });
-                });
-                disableBoardColorChange();
-                break;
-    };
-}
-
-// change the draw mode when a "Draw Mode" menu item is selected
-function changeDrawMode() {
-    $(".default").on("click", function(){
-        currentDrawMode = 1;
-        drawMode(currentDrawMode);
+function squareDefault() {
+    $("#sketchpad").mousedown(function(){
+        $(".square").hover(function(){
+            $(this).css("background-color", "blue");
+            $(".instructions-text").hide();
+        });
     });
-    
-    $(".random").on("click", function(){
-        currentDrawMode = 2;
-        drawMode(currentDrawMode);
-    });
-    
-    $(".increment").on("click", function(){
-        currentDrawMode = 3;
-        drawMode(currentDrawMode);
-    });
-}
-//
-
-// get the new size, input by the user by clicking the "Change Board Size" button
-function getNewSize(newSize) {
-    newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
-    
-    // if the prompt is canceled then exit the function
-    if (newSize === null) {
-        return;
-    }
-    // if the prompt is left blank then resize to default size
-    else if (newSize === ""){
-        sketchpadWidth = 16;
-        changeSize(sketchpadWidth);
-    }
-    // make sure the user entered a valid number
-    else if (isNaN(newSize) || newSize < 1 || newSize > 64) {
-        alert('"' + newSize + '" is not a valid NUMBER, try again.');
-    }
-    // otherwise, change the size of the sketchpad based on user input
-    else {
-        sketchpadWidth = newSize;
-        changeSize(sketchpadWidth);
-        
-    };
-    drawMode(currentDrawMode);
+    disableBoardColorChange();
 }
 
-// change the board size
-function changeSize(width) {
-    $("#sketchpad").empty();
-    createSketchpad(width);
+function squareRandomColors() {
+    $("#sketchpad").mousedown(function(){
+        $(".square").hover(function(){
+            var color = randomColor(); 
+            $(this).css("background-color", color);
+            $(".instructions-text").hide();
+        });
+    });
+    disableBoardColorChange();
 }
 
 // generate a random color
@@ -133,12 +51,76 @@ function randomColor(){
     return hue;
 }
 
-$(document).ready(function(){
+// clear the board, revert to default square color
+function clearBoard() {
+    $(".square").css("background-color", "#DEDEDE");
+}
+
+// selects the color change on the squares based on the currently selected mode
+function drawMode() {
+    if (currentDrawMode === "defaultSquares") {
+        $(".dropdown-menu > li").show();
+        $(".default").hide();
+        $("#mode-menu-text").text("Draw Mode: Default");
+        clearBoard();
+        squareDefault();
+    }
+    else if (currentDrawMode === "randomSquares") {
+        $(".dropdown-menu > li").show();
+        $(".random").hide();
+        $("#mode-menu-text").text("Draw Mode: Random Colors");
+        clearBoard();
+        squareRandomColors();
+    };
+}
+
+// change the draw mode when a "Draw Mode" menu item is selected
+function changeDrawMode() {
+    $(".default").on("click", function(){
+        currentDrawMode = "defaultSquares";
+        drawMode();
+    });
+    
+    $(".random").on("click", function(){
+        currentDrawMode = "randomSquares";
+        drawMode();
+    });
+}
+//
+
+// get the new size, input by the user by clicking the "Change Board Size" button
+function getNewSize(newSize) {
+    newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
+    // if the prompt is left blank then resize to default size
+    if (newSize === null) {
+        return;
+    }
+    else if (newSize === ""){
+        changeSize(sketchpadWidth);
+    }
+    // make sure the user entered a valid number
+    else if (isNaN(newSize) || newSize < 1 || newSize > 64) {
+        alert('"' + newSize + '" is not a valid NUMBER, try again.');
+    }
+    // otherwise, change the size of the sketchpad
+    else {
+        changeSize(newSize);
+    };
+    drawMode();
+}
+
+// change the board size
+function changeSize(width) {
+    $("#sketchpad").empty();
+    createSketchpad(width);
+}
+
+function listeners() {
     // draws the sketchpad and takes the sketchpadWidth as input
     createSketchpad(sketchpadWidth);
-
+    
     // changes the color of the squares on mouseover (default function)
-    drawMode(currentDrawMode);
+    drawMode();
     
     // listens for clicks on the draw mode drop-down menu
     changeDrawMode();
@@ -157,4 +139,8 @@ $(document).ready(function(){
     $(".btn").on("mouseup", function(){
         $(this).blur();
     });
+}
+
+$(document).ready(function(){
+    listeners();
 })
