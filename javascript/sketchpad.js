@@ -29,13 +29,14 @@ function disableBoardColorChange() {
     });
 }
 
-function clearBoard() {
+function reloadBoard() {
     $("#sketchpad").empty();
+    $("#sketchpad").off();
     createSketchpad(sketchpadWidth);
 }
 
 $(document).ready(function(){
-    $(".instructions-text").hide();
+    $(".instructions-text, .size-button, .clear-button").hide();
     // get the new size, input by the user by clicking the "Change Board Size" button
     $(".size-button").on("click", function(){
         var newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
@@ -60,10 +61,10 @@ $(document).ready(function(){
         };
     });
 
-    $(".draw-select").on("click", function(){ 
+    $(".initial-mode").on("click", function(){ 
         $(".dropdown-button").removeClass("btn-danger");
         $(".dropdown-button").addClass("btn-success");
-        $(".select-initial-text").hide();
+        $(".size-button, .clear-button").show();
         createSketchpad(sketchpadWidth);
     });
 
@@ -71,10 +72,10 @@ $(document).ready(function(){
         $(".dropdown-menu > li").show();
         $(".default").hide();
         $("#mode-menu-text").text("Draw Mode: Default");
-        clearBoard();
+        reloadBoard();
 
-        $("#sketchpad").mousedown(function(){
-            $(".square").hover(function(){
+        $("#sketchpad").on("mousedown", function(){
+            $(".square").on("mouseenter", function(){
                 $(this).css({"background-color": "blue", "opacity": "initial"});
                 $(".instructions-text").hide();
             });
@@ -87,10 +88,10 @@ $(document).ready(function(){
         $(".dropdown-menu > li").show();
         $(".random").hide();
         $("#mode-menu-text").text("Draw Mode: Random Colors");
-        clearBoard();
+        reloadBoard();
 
-        $("#sketchpad").mousedown(function(){
-            $(".square").hover(function(){
+        $("#sketchpad").on("mousedown", function(){
+            $(".square").on("mouseenter", function(){
                 var color = randomColor(); 
                 $(this).css({"background-color": color, "opacity": "initial"});
                 $(".instructions-text").hide();
@@ -104,10 +105,10 @@ $(document).ready(function(){
         $(".dropdown-menu > li").show();
         $(".increment").hide();
         $("#mode-menu-text").text("Draw Mode: Incremental Opacity");
-        clearBoard();
+        reloadBoard();
 
-        $("#sketchpad").mousedown(function(){
-            $(".square").hover(function(){
+        $("#sketchpad").on("mousedown", function(){
+            $(".square").on("mouseenter", function(){
                 $(this).css({"background-color": "blue", "opacity": $(this).css("opacity") * 0.75});
                 $(".instructions-text").hide();
             });
@@ -118,7 +119,8 @@ $(document).ready(function(){
 
     // clears the board to default state when the "Clear Board" button is pressed
     $(".clear-button").on("click", function(){
-        clearBoard();
+        $("#sketchpad").empty();
+        createSketchpad(sketchpadWidth);
     });
     
     // necessary to make the bootstrap buttons remove the active state class immediately after clicking them
