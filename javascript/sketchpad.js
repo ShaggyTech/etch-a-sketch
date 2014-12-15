@@ -30,20 +30,81 @@ function disableBoardColorChange() {
 }
 
 function reloadBoard() {
+    // removes all square divs from the sketchpad div
     $("#sketchpad").empty();
-    $("#sketchpad").off();
+    // turns "off" all events in the sketchpad area, necessary to be able to have smooth transitions when performing draw mode changes
+    $("#sketchpad").off();  // might be a better way to accomplish this than using .off()??
+    // reloads the sketchpad
     createSketchpad(sketchpadWidth);
 }
 
 $(document).ready(function(){
+    // makes sure these divs and buttons are initially hidden
     $(".instructions-text, .size-button, .clear-button").hide();
+
+    // wait until the user selects a mode, and only after that do we draw the sketchpad and show certain buttons 
+    $(".initial-mode").on("click", function(){ 
+        $(".dropdown-button").removeClass("btn-danger");
+        $(".dropdown-button").addClass("btn-success");
+        $(".size-button, .clear-button").show();
+        createSketchpad(sketchpadWidth);
+    });
+
+    // default draw mode
+    $(".default").on("click", function(){
+        $(".dropdown-menu > li").show();
+        $(".default").hide();
+        $("#mode-menu-text").text("Draw Mode: Default");
+        reloadBoard();
+        $("#sketchpad").on("mousedown", function(){
+            $(".square").on("mouseenter", function(){
+                $(this).css({"background-color": "black", "opacity": "initial"});
+                $(".instructions-text").hide();
+            });
+        });
+        disableBoardColorChange();
+    });
+
+    //random color draw mode
+    $(".random").on("click", function(){
+        $(".dropdown-menu > li").show();
+        $(".random").hide();
+        $("#mode-menu-text").text("Draw Mode: Random Colors");
+        reloadBoard();
+        $("#sketchpad").on("mousedown", function(){
+            $(".square").on("mouseenter", function(){
+                var color = randomColor(); 
+                $(this).css({"background-color": color, "opacity": "initial"});
+                $(".instructions-text").hide();
+            });
+        });
+        disableBoardColorChange();
+    });
+
+    // incremental opacity mode
+    $(".increment").on("click", function(){
+        $(".dropdown-menu > li").show();
+        $(".increment").hide();
+        $("#mode-menu-text").text("Draw Mode: Incremental Opacity");
+        reloadBoard();
+        $("#sketchpad").on("mousedown", function(){
+            $(".square").on("mouseenter", function(){
+                $(this).css({"background-color": "black", "opacity": $(this).css("opacity") * 0.75});
+                $(".instructions-text").hide();
+            });
+        });
+        disableBoardColorChange();
+    });
+
     // get the new size, input by the user by clicking the "Change Board Size" button
     $(".size-button").on("click", function(){
+        // prompt the user for a new size
         var newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
         // if the prompt is left blank then resize to default size
         if (newSize === null) {
             return;
         }
+        // if prompt is left blank the use default size
         else if (newSize === ""){
             sketchpadWidth = 16;
             $("#sketchpad").empty();
@@ -59,62 +120,6 @@ $(document).ready(function(){
             $("#sketchpad").empty();
             createSketchpad(sketchpadWidth);
         };
-    });
-
-    $(".initial-mode").on("click", function(){ 
-        $(".dropdown-button").removeClass("btn-danger");
-        $(".dropdown-button").addClass("btn-success");
-        $(".size-button, .clear-button").show();
-        createSketchpad(sketchpadWidth);
-    });
-
-    $(".default").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(".default").hide();
-        $("#mode-menu-text").text("Draw Mode: Default");
-        reloadBoard();
-
-        $("#sketchpad").on("mousedown", function(){
-            $(".square").on("mouseenter", function(){
-                $(this).css({"background-color": "blue", "opacity": "initial"});
-                $(".instructions-text").hide();
-            });
-        });
-
-        disableBoardColorChange();
-    });
-
-    $(".random").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(".random").hide();
-        $("#mode-menu-text").text("Draw Mode: Random Colors");
-        reloadBoard();
-
-        $("#sketchpad").on("mousedown", function(){
-            $(".square").on("mouseenter", function(){
-                var color = randomColor(); 
-                $(this).css({"background-color": color, "opacity": "initial"});
-                $(".instructions-text").hide();
-            });
-        });
-
-        disableBoardColorChange();
-    });
-
-    $(".increment").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(".increment").hide();
-        $("#mode-menu-text").text("Draw Mode: Incremental Opacity");
-        reloadBoard();
-
-        $("#sketchpad").on("mousedown", function(){
-            $(".square").on("mouseenter", function(){
-                $(this).css({"background-color": "blue", "opacity": $(this).css("opacity") * 0.75});
-                $(".instructions-text").hide();
-            });
-        });
-
-        disableBoardColorChange();
     });
 
     // clears the board to default state when the "Clear Board" button is pressed
