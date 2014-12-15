@@ -15,25 +15,26 @@
     <div class="menu">
         <div class="btn-group" role="group" aria-label="...">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                <span id="mode-menu-text">Draw Mode: Default</span>
+                <button type="button" class="btn btn-danger btn-lg dropdown-toggle dropdown-button" data-toggle="dropdown" aria-expanded="true">
+                <span id="mode-menu-text">Please Select a Draw Mode!</span>
                 <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li class="default" role="presentation"><a role="menuitem" tabindex="-1" href="#">Default</a></li>
-                    <li class="random" role="presentation"><a role="menuitem" tabindex="-1" href="#">Random Colors</a></li>
-                    <li class="increment" role="presentation"><a role="menuitem" tabindex="-1" href="#">Incremental</a></li>
-                    <li class="trail" role="presentation"><a role="menuitem" tabindex="-1" href="#">Leave a trail</a></li>
+                    <li class="default draw-select" role="presentation"><a role="menuitem" tabindex="-1">Default</a></li>
+                    <li class="random draw-select" role="presentation"><a role="menuitem" tabindex="-1">Random Colors</a></li>
+                    <li class="increment draw-select" role="presentation"><a role="menuitem" tabindex="-1">Incremental</a></li>
+                    <li class="trail draw-select" role="presentation"><a role="menuitem" tabindex="-1">Leave a trail</a></li>
                 </ul>
             </div>
             <button type="button" class="btn btn-primary btn-lg size-button">Change Board Size</button>
-            <button type="button" class="btn btn-danger btn-lg clear-button">Clear Board</button>
+            <button type="button" class="btn btn-warning btn-lg clear-button">Clear Board</button>
             
         </div>
     </div>
     <div class="instructions">
         <h4></h4>
         <h4 class="instructions-text">To begin drawing: left click the board.</h4>
+        <h1 class="select-initial-text">TO BEGIN PLAYING: Please select a draw mode from the drop-down menu above!</h1>
     </div>
     
     <div id="sketchpad">

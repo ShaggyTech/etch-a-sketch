@@ -15,6 +15,7 @@ body {
     float: left;
     background-color: #DEDEDE;
     outline: black solid 1px;
+    opacity: 1;
 }
 
 .square-normal {
@@ -27,12 +28,13 @@ body {
     height: 100%;
     text-align: center;
 }
-.menu-group {
-    float: left;
-}
 
 .instructions {
     text-align: center;
     height: 35px;
     margin: auto;
+}
+
+.draw-select > a {
+    cursor: pointer;
 }
