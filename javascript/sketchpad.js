@@ -50,12 +50,11 @@ $(document).ready(function(){
         Without it the previously selected draw mode will glitch and still be active when switching to other modes */
     var reloadBoard = function() {
         $sketchpad.off();  // might be a better way to accomplish this than just using .off()??
-        
-        // reloads the sketchpad
         createSketchpad(sketchpadWidth);
     }
 
-    // wait until the user selects a mode, and only after that do we draw the sketchpad and show certain buttons
+    // upon first loading the page, wait until the user selects a mode, 
+    // and only after that do we draw the sketchpad and show certain buttons
     var initialDrawMode = function() {
         $(".dropdown-menu li").on("click", function(){ 
             $(".dropdown-button").removeClass("btn-danger").addClass("btn-success");
@@ -100,7 +99,7 @@ $(document).ready(function(){
         });
     }
 
-    // incremental opacity mode
+    // incremental opacity draw mode
     var drawModeIncrement = function() {
         $(".increment").on("click", function(){
             $(".dropdown-menu > li").show();
@@ -118,7 +117,7 @@ $(document).ready(function(){
     }
 
     // get the new size, input by the user by clicking the "Change Board Size" button
-    var getNewSize = function() {
+    var changeSize = function() {
         $(".size-button").on("click", function(){
             // prompt the user for a new size
             var newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
@@ -158,7 +157,7 @@ $(document).ready(function(){
         drawModeDefault();
         drawModeRandom();
         drawModeIncrement();
-        getNewSize();
+        changeSize();
         clearBoard();
     }
 
