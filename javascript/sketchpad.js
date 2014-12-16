@@ -48,6 +48,10 @@ $(document).ready(function(){
         $(".dropdown-button").addClass("btn-success");
         $(".size-button, .clear-button").show();
         createSketchpad(sketchpadWidth);
+        // will scroll down to the top of the menu div after setting a mode
+        $('html, body').animate({
+            scrollTop: $(".menu").offset().top
+        }, 1000);
     });
 
     // default draw mode
