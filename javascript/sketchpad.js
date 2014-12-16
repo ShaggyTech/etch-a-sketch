@@ -91,7 +91,7 @@ $(document).ready(function(){
             $sketchpad.on("mousedown", function(){
                 $square.on("mouseenter", function(){
                     var color = randomColor(); 
-                    $(this).css("background-color", "color");
+                    $(this).css("background-color", color);
                     $instructions.hide();
                 });
             });
