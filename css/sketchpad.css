@@ -13,10 +13,11 @@ a.top {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.1em;
     padding-right: 20px;
     padding-left: 20px;
     color: #DEDEDE;
+
 }
 
 a:link, a:visited, a:hover, a:active {
@@ -54,6 +55,10 @@ a:hover {
     text-align: center;
 }
 
+.initial-mode > a {
+    cursor: pointer;
+}
+
 .instructions {
     margin: auto;
     text-align: center;
@@ -61,15 +66,10 @@ a:hover {
     width: 720px;
     font-size: 1.5em;}
 
-.draw-select > a {
-    cursor: pointer;
-}
-
 #sketchpad {
     margin: auto;
     width: 720px;
     height: 720px;
-    cursor: crosshair;
 }
 
 .square {

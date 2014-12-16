@@ -47,6 +47,7 @@ $(document).ready(function(){
         $(".dropdown-button").removeClass("btn-danger");
         $(".dropdown-button").addClass("btn-success");
         $(".size-button, .clear-button").show();
+        $("#sketchpad").css("cursor", "crosshair");
         createSketchpad(sketchpadWidth);
         // will scroll down to the top of the menu div after setting a mode
         $('html, body').animate({
