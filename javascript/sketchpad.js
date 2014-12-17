@@ -7,7 +7,7 @@ var $instructions = $(".instructions-text");
 var $modeMenuText =  $("#mode-menu-text");
 
 //this selector/class is used to keep initially hidden elements on the page from "flashing" on page load/refresh
-var $hiddenInitially = $(".hidden-initially"); //this selector/class is used to keep hidden elements on the page from "flashing" on page load/refresh
+var $hiddenInitially = $(".hidden-initially");
 
 // will scroll down to the top of the menu div (i.e. anytime createSketchpad() is called)
 var scrollToBoard = function(){
@@ -30,7 +30,8 @@ var createSketchpad = function(width) {
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
     if ($hiddenInitially.hasClass("hidden-initially")) {
-        $hiddenInitially.show();   
+        $hiddenInitially.show();
+        $hiddenInitially.removeClass("hidden-initially");
     }
     scrollToBoard();
 }
