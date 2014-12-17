@@ -45,6 +45,7 @@ a:hover {
     padding-left: 30px;
     font-family: "Arial Black", Gadget, sans-serif;
     font-size: 2.1em;
+    text-shadow: 1px 1px 4px rgba(150, 150, 150, 1);
 }
 
 .header-right {
@@ -68,7 +69,11 @@ a:hover {
     text-align: center;
     height: 35px;
     width: 720px;
-    font-size: 1.5em;
+}
+
+.instructions-text {
+    pointer-events: none;
+    cursor: default;
 }
 
 #sketchpad {
@@ -76,6 +81,7 @@ a:hover {
     width: 720px;
     height: 720px;
     background-color: red;
+    cursor: crosshair;
 }
 
 .square {

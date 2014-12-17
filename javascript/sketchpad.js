@@ -30,8 +30,7 @@ var createSketchpad = function(width) {
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
     if ($hiddenInitially.hasClass("hidden-initially")) {
-        $hiddenInitially.show();
-        $hiddenInitially.removeClass("hidden-initially");
+        $hiddenInitially.show().removeClass("hidden-initially");
     }
     scrollToBoard();
 }
@@ -64,7 +63,6 @@ var initialDrawMode = function() {
     $(".dropdown-menu li").on("click", function(){ 
         $(".dropdown-button").removeClass("btn-danger").addClass("btn-success");
         $(".size-button, .clear-button").show();
-        $sketchpad.css("cursor", "crosshair");
         createSketchpad(sketchpadWidth);
     });    
 }
