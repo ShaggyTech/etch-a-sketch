@@ -59,17 +59,23 @@ a:hover {
     text-align: center;
 }
 
+.hidden-initially {
+    display: none;
+}
+
 .instructions {
     margin: auto;
     text-align: center;
     height: 35px;
     width: 720px;
-    font-size: 1.5em;}
+    font-size: 1.5em;
+}
 
 #sketchpad {
     margin: auto;
     width: 720px;
     height: 720px;
+    background-color: red;
 }
 
 .square {

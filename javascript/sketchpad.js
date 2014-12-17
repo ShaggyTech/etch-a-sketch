@@ -6,6 +6,9 @@ var $square;
 var $instructions = $(".instructions-text");
 var $modeMenuText =  $("#mode-menu-text");
 
+//this selector/class is used to keep initially hidden elements on the page from "flashing" on page load/refresh
+var $hiddenInitially = $(".hidden-initially"); //this selector/class is used to keep hidden elements on the page from "flashing" on page load/refresh
+
 // will scroll down to the top of the menu div (i.e. anytime createSketchpad() is called)
 var scrollToBoard = function(){
     $('html, body').animate({
@@ -26,6 +29,9 @@ var createSketchpad = function(width) {
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
+    if ($hiddenInitially.hasClass("hidden-initially")) {
+        $hiddenInitially.show();   
+    }
     scrollToBoard();
 }
 
@@ -47,7 +53,7 @@ var disableBoardColorChange =  function() {
     .off() is needed so we don't have to ask for a new size everytime the draw mode is changed like I've seen most user implement. 
     Without it the previously selected draw mode will glitch and still be active when switching to other modes */
 var reloadBoard = function() {
-    $sketchpad.off();  // might be a better way to accomplish this than just using .off()??
+    $sketchpad.off();
     createSketchpad(sketchpadWidth);
 }
 

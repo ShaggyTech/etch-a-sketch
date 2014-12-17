@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/sketchpad.css">
-    
+    <script type="text/javascript">
+      document.documentElement.className = 'js'; <!-- Needed to keep initially hidden elements from "flashing" on page load/refresh -->
+    </script>
  </head>
  
  <body>
@@ -31,17 +33,17 @@
                     <li class="trail" role="presentation"><a role="menuitem" tabindex="-1">Leave a trail</a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary btn-lg size-button">Change Board Size</button>
-            <button type="button" class="btn btn-danger btn-lg clear-button">Clear Board</button>
+            <button type="button" class="btn btn-primary btn-lg size-button hidden-initially">Change Board Size</button>
+            <button type="button" class="btn btn-danger btn-lg clear-button hidden-initially">Clear Board</button>
             
         </div>
     </div>
     <div class="instructions">
         <span></span>
-        <span class="instructions-text">To begin drawing: left click the board.</span>
+        <span class="instructions-text hidden-initially">To begin drawing: left click the board.</span>
     </div>
     
-    <div id="sketchpad">
+    <div id="sketchpad" class="hidden-initially">
         <!-- squares will be added here -->
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
