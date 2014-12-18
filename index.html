@@ -2,7 +2,7 @@
  <html>
  
  <head>
-    <title>Etch-A-Sketch - ProjectOdin.com</title>
+    <title>Sketch-Pad - ProjectOdin.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/sketchpad.css">
@@ -13,39 +13,42 @@
  
  <body>
     <div class="header top">
-        <span class="header-left top">ETCH-A-SKETCH</span>
+        <div class="header-left top">
+            <span>SKETCH-PAD</span>
+        </div>
         <div class="header-right top">
             <a class="top" href="https://github.com/vdubmastertech/etch-a-sketch" target="_newtab">Source Code</a>
             <a class="top" href="http://www.theodinproject.com/web-development-101/javascript-and-jquery" target="_newtab">The Odin Project</a>
         </div>
     </div>
     <div class="menu">
-        <div class="btn-group" role="group" aria-label="...">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-danger btn-lg dropdown-toggle dropdown-button" data-toggle="dropdown" aria-expanded="true">
-                <span id="mode-menu-text">Please select a Draw Mode to Begin!</span>
+        <div class="btn-group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger btn-lg dropdown-toggle dropdown-button first-menu" data-toggle="dropdown">
+                <span id="mode-menu-text">PLEASE SELECT A DRAW MODE TO BEGIN</span>
                 <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="default" role="presentation"><a role="menuitem" tabindex="-1">Default</a></li>
-                    <li class="random" role="presentation"><a role="menuitem" tabindex="-1">Random Colors</a></li>
-                    <li class="increment" role="presentation"><a role="menuitem" tabindex="-1">Incremental</a></li>
-                    <li class="trail" role="presentation"><a role="menuitem" tabindex="-1">Leave a trail</a></li>
+                <ul class="dropdown-menu">
+                    <li class="default"><a>Default</a></li>
+                    <li class="random"><a>Random Colors</a></li>
+                    <li class="increment"><a>Incremental</a></li>
+                    <li class="trail"><a>Leave a trail</a></li>
                 </ul>
             </div>
+            <span></span>
             <button type="button" class="btn btn-primary btn-lg size-button hidden-initially">Change Board Size</button>
             <button type="button" class="btn btn-danger btn-lg clear-button hidden-initially">Clear Board</button>
-            
         </div>
     </div>
     <div class="instructions">
         <span></span>
-        <span class="btn btn-warning instructions-text hidden-initially">CLICK THE BOARD TO BEGIN DRAWING</span>
+        <span class="btn btn-warning instructions-text hidden-initially"><span class="glyphicon glyphicon-exclamation-sign"></span> CLICK THE BOARD TO BEGIN DRAWING</span>
     </div>
     
     <div id="sketchpad" class="hidden-initially">
         <!-- squares will be added here -->
     </div>
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="javascript/sketchpad.js"></script>

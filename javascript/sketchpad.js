@@ -49,6 +49,14 @@ var disableBoardColorChange =  function() {
     });
 }
 
+// clears the board to default state when the "Clear Board" button is pressed
+var clearBoard = function() {
+    $(".clear-button").on("click", function(){
+        $sketchpad.empty();
+        createSketchpad(sketchpadWidth);
+    });
+}
+
 /*  Called when changing draw modes and turns "off" all events in the sketchpad area.
     .off() is needed so we don't have to ask for a new size everytime the draw mode is changed like I've seen most user implement. 
     Without it the previously selected draw mode will glitch and still be active when switching to other modes */
@@ -59,8 +67,9 @@ var reloadBoard = function() {
 
 // upon first loading the page, wait until the user selects a mode, 
 // and only after that do we draw the sketchpad and show certain buttons
-var initialDrawMode = function() {
-    $(".dropdown-menu li").on("click", function(){ 
+var firstDrawMode = function() {
+    $(".dropdown-menu li").on("click", function(){
+        $(".first-menu").removeClass("first-menu"); 
         $(".dropdown-button").removeClass("btn-danger").addClass("btn-success");
         $(".size-button, .clear-button").show();
         createSketchpad(sketchpadWidth);
@@ -147,16 +156,8 @@ var changeSize = function() {
     });
 }
 
-// clears the board to default state when the "Clear Board" button is pressed
-var clearBoard = function() {
-    $(".clear-button").on("click", function(){
-        $sketchpad.empty();
-        createSketchpad(sketchpadWidth);
-    });
-}
-
 var listeners = function() {
-    initialDrawMode();
+    firstDrawMode();
     drawModeDefault();
     drawModeRandom();
     drawModeIncrement();
@@ -169,7 +170,7 @@ $(".btn").on("mouseup", function(){
     $(this).blur();
 });
 
-$(".instructions-text, .size-button, .clear-button").hide();    // makes sure these divs and buttons are initially hidden
+$(".hidden-initially").hide();    // makes sure these divs and buttons are initially hidden
 
 $(document).ready(function(){    
     listeners();

@@ -33,17 +33,22 @@ a:hover {
     font-weight: bold;
 }
 
+.first-menu {
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+
 .header {
     width: 100%;
     margin-bottom: 20px;
     background-color: rgba(0, 0, 0, 0.25);
+    font-family: "Arial Black", Gadget, sans-serif;
 }
 
 .header-left {
     float: left;
     position: relative;
     padding-left: 30px;
-    font-family: "Arial Black", Gadget, sans-serif;
     font-size: 2.1em;
     text-shadow: 1px 1px 4px rgba(150, 150, 150, 1);
 }
@@ -74,13 +79,13 @@ a:hover {
 .instructions-text {
     pointer-events: none;
     cursor: default;
+    font-weight: bold;
 }
 
 #sketchpad {
     margin: auto;
     width: 720px;
     height: 720px;
-    background-color: red;
     cursor: crosshair;
 }
 
@@ -93,4 +98,10 @@ a:hover {
 
 .square-normal {
     background-color: black;
+}
+
+#initial-menu {
+    margin: auto;
+    height: 720px;
+    width: 720px;
 }
