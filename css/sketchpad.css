@@ -46,20 +46,19 @@ a:hover {
 .header-left {
     float: left;
     position: relative;
-    padding-left: 30px;
+    padding-left: 50px;
 }
 
 #headerTitle {
     float: left;
     font-size: 2.1em;
     text-shadow: 1px 1px 4px rgba(150, 150, 150, 0.50);
-    text-ou
     clear: right;
 }
 
 #myName {
     height: 20px;
-    width: 300px;
+    width: 250px;
     margin-top: 7.5px;
     background-color: rgba(0, 0, 0, 0.50);
     font-size: 0.8em;
