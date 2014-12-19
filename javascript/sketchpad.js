@@ -1,16 +1,16 @@
-var numSquares = 0;
-var numColumns = 0;
-
 var sketchpadWidth = 16;  // initial sketchpad width
+var newSketchpadWidth;
+var newSketchpadHeight
 var boardWidth;
+var boardHeight;
+var numSquares;
+var numColumns;
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
 var $square;
 var $instructions = $(".instructions-text");
 var $modeMenuText =  $("#mode-menu-text");
-var boardHeight;
-var boardWidth;
 
 //this selector/class is used to keep initially hidden elements on the page from "flashing" on page load/refresh
 var $hiddenInitially = $(".hidden-initially");
@@ -24,42 +24,38 @@ var scrollToBoard = function(){
 
 // builds the sketchpad
 var createSketchpad = function(width) {
-    console.log("$sketchpad width before: " + $sketchpad.width());
     var squareSize = $sketchpad.outerWidth() / width;
-    console.log("squareSize" + squareSize);
     var sketchpadArray = [];
-
     numSquares = 0;
     for (x = 0; x < width; x++) {
         sketchpadArray += '<span class="column-counter">';
         for (i = 0; i < width; i++) {
-        sketchpadArray += '<div class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px;"></div>';
+        sketchpadArray += '<span class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
         numSquares += 1;
         };
         sketchpadArray += '</span>';
     };
-    $sketchpad.empty();
+    $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
-    if ($hiddenInitially.hasClass("hidden-initially")) {
-        $hiddenInitially.show().removeClass("hidden-initially");
-    }
+    
 
     numColumns = 0;
-    numColumns += $("#sketchpad > span").length;
+    numColumns += $("#sketchpad > .column-counter").length;
     boardHeight = numColumns;
     boardWidth = numSquares / numColumns;
-    var newSketchpadHeight = squareSize * boardHeight;
-    var newSketchpadWidth = squareSize * boardWidth;
+    newSketchpadHeight = squareSize * boardHeight;
+    newSketchpadWidth = squareSize * boardWidth;
 
-    $sketchpad.css({"height": newSketchpadHeight, "width": newSketchpadWidth});
-    console.log("$sketchpad width after: " + $sketchpad.width());
+    // $sketchpad.css({"height": newSketchpadHeight, "width": newSketchpadWidth});
+
+    /*console.log("$sketchpad width after: " + $sketchpad.width());
     console.log("numSquares: " + numSquares);
     console.log(numColumns);
     console.log(sketchpadWidth);
     console.log(boardHeight);
-    console.log(boardWidth);
+    console.log(boardWidth);*/
     
     scrollToBoard();
 }
@@ -77,23 +73,16 @@ var disableBoardColorChange =  function() {
     $sketchpad.mouseleave(function(){
         $square.off();
         $instructions.show();
+        $(".resize-div").resizable();
     });
 }
 
 // clears the board to default state when the "Clear Board" button is pressed
 var clearBoard = function() {
     $(".clear-button").on("click", function(){
-        $sketchpad.empty();
+        $sketchpad.empty("span");
         createSketchpad(sketchpadWidth);
     });
-}
-
-/*  Called when changing draw modes and turns "off" all events in the sketchpad area.
-    .off() is needed so we don't have to ask for a new size everytime the draw mode is changed like I've seen most user implement. 
-    Without it the previously selected draw mode will glitch and still be active when switching to other modes */
-var reloadBoard = function() {
-    $sketchpad.off();
-    createSketchpad(sketchpadWidth);
 }
 
 // upon first loading the page, wait until the user selects a mode, 
@@ -103,7 +92,7 @@ var firstDrawMode = function() {
         if ($(".dropdown-button").hasClass("btn-danger")) {
             $(".first-menu").removeClass("first-menu"); 
             $(".dropdown-button").removeClass("btn-danger").addClass("btn-success");
-            $(".size-button, .clear-button").show();
+            $hiddenInitially.show().removeClass("hidden-initially");
             createSketchpad(sketchpadWidth);
         };
     });    
@@ -115,7 +104,6 @@ var drawModeDefault = function() {
         $(".dropdown-menu > li").show();
         $(this).hide();
         $modeMenuText.text("Draw Mode: Default");
-        reloadBoard();
         $sketchpad.on("mousedown", function(){
             $square.on("mouseenter", function(){
                 $(this).css("background-color", "black");
@@ -132,7 +120,6 @@ var drawModeRandom = function() {
         $(".dropdown-menu > li").show();
         $(this).hide();
         $modeMenuText.text("Draw Mode: Random Colors");
-        reloadBoard();
         $sketchpad.on("mousedown", function(){
             $square.on("mouseenter", function(){
                 var color = randomColor(); 
@@ -150,10 +137,15 @@ var drawModeIncrement = function() {
         $(".dropdown-menu > li").show();
         $(this).hide();
         $modeMenuText.text("Draw Mode: Incremental Opacity");
-        reloadBoard();
         $sketchpad.on("mousedown", function(){
             $square.on("mouseenter", function(){
-                $(this).css({"background-color": "black", "opacity": $(this).css("opacity") * 0.75});
+                var count = $(this).data("increment-count");
+                var colorIncrement;
+                if (!count) count = 1;
+                if (count < 10) count++;
+                $(this).data("increment-count", count);
+                colorIncrement = 256 - Math.floor(25 * count);
+                $(this).css({"background-color": "rgb(" + colorIncrement + ", " + colorIncrement + ", " + colorIncrement + ")"});
                 $instructions.hide();
             });
         });
@@ -204,8 +196,6 @@ $(".btn").on("mouseup", function(){
 });
 
 $(".hidden-initially").hide();    // makes sure these divs and buttons are initially hidden
-
-$("#resize-div").resizable();
 
 $(document).ready(function(){    
     listeners();
