@@ -75,7 +75,7 @@ var firstDrawMode = function() {
         createSketchpad(sketchpadWidth);
     });    
 }
-
+// remove me
 // default draw mode
 var drawModeDefault = function() {
     $(".default").on("click", function(){
