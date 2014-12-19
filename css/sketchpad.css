@@ -31,6 +31,12 @@ a:hover {
     background-color: #DEDEDE;
     color: black;
     font-weight: bold;
+    border-bottom-right-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        -webkit-border-bottom-left-radius: 5px;
 }
 
 .header {
@@ -40,13 +46,13 @@ a:hover {
     background-color: rgba(0, 0, 0, 0.25);
     font-family: "Arial Black", Gadget, sans-serif;
     border-bottom: 1px solid black;
-    z-index: 1;
 }
 
 .header-left {
     float: left;
     position: relative;
     padding-left: 50px;
+    color: white;
 }
 
 #headerTitle {
@@ -57,31 +63,27 @@ a:hover {
 }
 
 #myName {
-    height: 20px;
     width: 250px;
-    margin-top: 7.5px;
+    margin-top: 7.7px;
     background-color: rgba(0, 0, 0, 0.50);
-    font-size: 0.8em;
+    font-size: 0.75em;
     float: right;
     clear: left;
-    position: relative;
-    display: inline-block;
     text-align: center;
-    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.40);
     border-right: 2px solid black;
     border-left: 2px solid black;
     border-bottom: 2px solid black;
-    -moz-border-radius-bottomright: 5px;
-    -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    z-index: 25;
+        -moz-border-radius-bottomleft: 5px;
+        -webkit-border-bottom-left-radius: 5px;
 }
 
 #myName > span {
     font-size: 0.75em;
+    padding-right: 15px;
 }
 
 .header-right {
