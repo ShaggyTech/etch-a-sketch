@@ -1,22 +1,23 @@
 // global variables
 var sketchpadWidth = 16;  // initial sketchpad width
+
+/* these aren't used for now, may use them later: 
 var newSketchpadWidth;
 var newSketchpadHeight
 var boardWidth;
 var boardHeight;
 var numSquares;
 var numColumns;
+*/
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
 var $square;
 var $instructions = $(".instructions-text");
 var $modeMenuText =  $("#mode-menu-text");
-
-//this selector/class is used to keep initially hidden elements on the page from "flashing" on page load/refresh
 var $hiddenInitially = $(".hidden-initially");
 
-// will scroll down to the top of the menu div (i.e. anytime createSketchpad() is called)
+// will scroll down to the top of the menu div (i.e. anytime drawSketchpad() is called)
 var scrollToBoard = function(){
     $('html, body').animate({
         scrollTop: $(".menu").offset().top
@@ -24,7 +25,7 @@ var scrollToBoard = function(){
 }
 
 // builds the sketchpad
-var createSketchpad = function(width) {
+var drawSketchpad = function(width) {
     var squareSize = $sketchpad.innerWidth() / width;
     var sketchpadArray = [];
     numSquares = 0;
@@ -41,13 +42,16 @@ var createSketchpad = function(width) {
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
 
+    scrollToBoard();
+
+    /* these aren't used for now, may use them later: 
     numColumns = 0;
     numColumns += $("#sketchpad > .column-counter").length;
     boardHeight = numColumns;
     boardWidth = numSquares / numColumns;
     newSketchpadHeight = squareSize * boardHeight;
-    newSketchpadWidth = squareSize * boardWidth;    
-    scrollToBoard();
+    newSketchpadWidth = squareSize * boardWidth;
+    */
 }
 
 // generate a random color
@@ -56,7 +60,7 @@ var randomColor = function(){
     return hue;
 }
 
-// disables the board when the cursor leaves the sketchpad
+// disables the board when the cursor leaves the sketchpad and shows the instructions to re-enable
 var disableBoardOnLeave =  function() {
     $sketchpad.mouseleave(function(){
         $square.off();
@@ -64,11 +68,11 @@ var disableBoardOnLeave =  function() {
     });
 }
 
-// clears the board to default state when the "Clear Board" button is pressed
+// resets all squares to default color
 var clearBoard = function() {
     $(".clear-button").on("click", function(){
         $sketchpad.empty("span");
-        createSketchpad(sketchpadWidth);
+        drawSketchpad(sketchpadWidth);
     });
 }
 
@@ -76,15 +80,15 @@ var clearBoard = function() {
 // and only after that do we draw the sketchpad and show certain buttons
 var firstDrawMode = function() {
     $(".dropdown-menu li").on("click", function(){
-        if ($(".dropdown-button").hasClass("btn-danger")) {
-            $(".first-menu").removeClass("first-menu"); 
-            $(".dropdown-button").removeClass("btn-danger").addClass("btn-success");
-            $hiddenInitially.show().removeClass("hidden-initially");
-            createSketchpad(sketchpadWidth);
+        if ($(".dropdown-button").hasClass("btn-danger")) { // if this is the first time we are drawing the board
+            $(".first-menu").removeClass("first-menu");  // removes the right border radius from the left menu button
+            $(".dropdown-button").removeClass("btn-danger").addClass("btn-success"); // change the color of the left menu button to green
+            $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
+            drawSketchpad(sketchpadWidth);  // create the initial board
         };
     });    
 }
-// remove me
+
 // default draw mode
 var drawModeDefault = function() {
     $(".default").on("click", function(){
@@ -153,7 +157,7 @@ var changeSize = function() {
         else if (newSize === ""){
             sketchpadWidth = 16;
             $sketchpad.empty();
-            createSketchpad(sketchpadWidth);
+            drawSketchpad(sketchpadWidth);
         }
         // make sure the user entered a valid number
         else if (isNaN(newSize) || newSize < 1 || newSize > 64) {
@@ -163,7 +167,7 @@ var changeSize = function() {
         else {
             sketchpadWidth = newSize;
             $sketchpad.empty();
-            createSketchpad(sketchpadWidth);
+            drawSketchpad(sketchpadWidth);
         };
     });
 }
