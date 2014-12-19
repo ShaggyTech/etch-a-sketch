@@ -84,9 +84,8 @@ a:hover {
 
 #sketchpad {
     margin: auto;
-    width: 720px;
-    height: 720px;
-    cursor: crosshair;
+    width: 740px;
+    height: 740px;
 }
 
 .square {
@@ -106,4 +105,11 @@ a:hover {
     margin: auto;
     height: 720px;
     width: 720px;
+}
+
+.resize-div {
+    height: 100px;
+    width: 100px;
+    background-color: blue;
+    margin: auto;
 }
