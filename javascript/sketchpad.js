@@ -25,12 +25,13 @@ var scrollToBoard = function(){
 var resizableSketchpad = function(){
     $( "#resize-div" ).resizable({
         containment: "parent",
+        ghost: true
     });
 }
 
 // builds the sketchpad
 var createSketchpad = function(width) {
-    var squareSize = $sketchpad.outerWidth() / width;
+    var squareSize = $sketchpad.innerWidth() / width;
     var sketchpadArray = [];
     numSquares = 0;
     for (x = 0; x < width; x++) {
@@ -54,7 +55,7 @@ var createSketchpad = function(width) {
     numColumns += $("#sketchpad > .column-counter").length;
     boardHeight = numColumns;
     boardWidth = numSquares / numColumns;
-    newSketchpadHeight;
+    newSketchpadHeight = squareSize * boardHeight;
     newSketchpadWidth = squareSize * boardWidth;
 
     //$sketchpad.css({"height": newSketchpadHeight, "width": newSketchpadWidth});

@@ -87,7 +87,6 @@ a:hover {
     margin: auto;
     width: 740px;
     height: 740px;
-    background-color: red;
 }
 
 .square {
@@ -112,5 +111,4 @@ a:hover {
     height: 960px;
     overflow: hidden;
     padding: 15px;
-
 }
