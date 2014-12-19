@@ -2,7 +2,7 @@ body {
     background-color: #0f0f0f;
     background-image: url('../img/ios-linen.jpg');
     color:#ffffff;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 }
 
 .top {
@@ -83,12 +83,17 @@ a:hover {
 }
 
 #sketchpad {
+    position: relative;
     margin: auto;
     width: 740px;
     height: 740px;
 }
 
 .square {
+
+    display: block;
+    right: 0;
+    bottom: 0;
     float: left;
     background-color: #DEDEDE;
     outline: black solid 1px;
@@ -99,15 +104,11 @@ a:hover {
     background-color: black;
 }
 
-#initial-menu {
+#board-container {
     margin: auto;
-    height: 720px;
-    width: 720px;
-}
-
-.resize-div {
-    height: 100px;
-    width: 100px;
-    background-color: blue;
-    margin: auto;
+    position: relative;
+    width: 960px;
+    height: 960px;
+    overflow: hidden;
+    padding: 15px;
 }
