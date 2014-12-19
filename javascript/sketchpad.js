@@ -22,6 +22,12 @@ var scrollToBoard = function(){
     }, 400);
 }
 
+var resizableSketchpad = function(){
+    $( "#resize-div" ).resizable({
+        containment: "parent",
+    });
+}
+
 // builds the sketchpad
 var createSketchpad = function(width) {
     var squareSize = $sketchpad.outerWidth() / width;
@@ -30,25 +36,28 @@ var createSketchpad = function(width) {
     for (x = 0; x < width; x++) {
         sketchpadArray += '<span class="column-counter">';
         for (i = 0; i < width; i++) {
-        sketchpadArray += '<span class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
-        numSquares += 1;
+            sketchpadArray += '<span class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
+            numSquares += 1;
         };
         sketchpadArray += '</span>';
     };
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
+    $sketchpad = $sketchpad;
     $instructions.show();
+
     
+    resizableSketchpad();
 
     numColumns = 0;
     numColumns += $("#sketchpad > .column-counter").length;
     boardHeight = numColumns;
     boardWidth = numSquares / numColumns;
-    newSketchpadHeight = squareSize * boardHeight;
+    newSketchpadHeight;
     newSketchpadWidth = squareSize * boardWidth;
 
-    // $sketchpad.css({"height": newSketchpadHeight, "width": newSketchpadWidth});
+    //$sketchpad.css({"height": newSketchpadHeight, "width": newSketchpadWidth});
 
     /*console.log("$sketchpad width after: " + $sketchpad.width());
     console.log("numSquares: " + numSquares);

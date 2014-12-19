@@ -87,11 +87,14 @@ a:hover {
     margin: auto;
     width: 740px;
     height: 740px;
-    background-color: transparent;
+    background-color: red;
 }
 
 .square {
-    position: relative;
+
+    display: block;
+    right: 0;
+    bottom: 0;
     float: left;
     background-color: #DEDEDE;
     outline: black solid 1px;
@@ -100,4 +103,14 @@ a:hover {
 
 .square-normal {
     background-color: black;
+}
+
+#board-container {
+    margin: auto;
+    position: relative;
+    width: 960px;
+    height: 960px;
+    overflow: hidden;
+    padding: 15px;
+
 }
