@@ -1,3 +1,4 @@
+// global variables
 var sketchpadWidth = 16;  // initial sketchpad width
 var newSketchpadWidth;
 var newSketchpadHeight
@@ -22,13 +23,6 @@ var scrollToBoard = function(){
     }, 400);
 }
 
-var resizableSketchpad = function(){
-    $( "#resize-div" ).resizable({
-        containment: "parent",
-        ghost: true
-    });
-}
-
 // builds the sketchpad
 var createSketchpad = function(width) {
     var squareSize = $sketchpad.innerWidth() / width;
@@ -45,32 +39,16 @@ var createSketchpad = function(width) {
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
-    $sketchpad = $sketchpad;
     $instructions.show();
-
-    
-    resizableSketchpad();
 
     numColumns = 0;
     numColumns += $("#sketchpad > .column-counter").length;
     boardHeight = numColumns;
     boardWidth = numSquares / numColumns;
     newSketchpadHeight = squareSize * boardHeight;
-    newSketchpadWidth = squareSize * boardWidth;
-
-    //$sketchpad.css({"height": newSketchpadHeight, "width": newSketchpadWidth});
-
-    /*console.log("$sketchpad width after: " + $sketchpad.width());
-    console.log("numSquares: " + numSquares);
-    console.log(numColumns);
-    console.log(sketchpadWidth);
-    console.log(boardHeight);
-    console.log(boardWidth);*/
-    
+    newSketchpadWidth = squareSize * boardWidth;    
     scrollToBoard();
 }
-
-
 
 // generate a random color
 var randomColor = function(){
@@ -79,11 +57,10 @@ var randomColor = function(){
 }
 
 // disables the board when the cursor leaves the sketchpad
-var disableBoardColorChange =  function() {
+var disableBoardOnLeave =  function() {
     $sketchpad.mouseleave(function(){
         $square.off();
         $instructions.show();
-        $(".resize-div").resizable();
     });
 }
 
@@ -120,7 +97,7 @@ var drawModeDefault = function() {
                 $instructions.hide();
             });
         });
-        disableBoardColorChange();
+        disableBoardOnLeave();
     });
 }
 
@@ -137,7 +114,7 @@ var drawModeRandom = function() {
                 $instructions.hide();
             });
         });
-        disableBoardColorChange();
+        disableBoardOnLeave();
     });
 }
 
@@ -159,7 +136,7 @@ var drawModeIncrement = function() {
                 $instructions.hide();
             });
         });
-        disableBoardColorChange();
+        disableBoardOnLeave();
     });
 }
 
