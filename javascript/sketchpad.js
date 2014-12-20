@@ -4,7 +4,6 @@ var drawModeID = 100;
 var totalColumns;
 var totalRows;
 var numSquares;
-var numColumns;
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
@@ -32,7 +31,6 @@ var drawSketchpad = function(width) {
     var totalRows = $sketchpad.height() / squareSize;
     var sketchpadArray = [];
     numSquares = 0;
-    numColumns = 0;
 
     console.log("squareSize: " + squareSize);
     console.log("totalColumns: " + totalColumns);
@@ -45,8 +43,8 @@ var drawSketchpad = function(width) {
             numSquares += 1;
         };
         sketchpadArray += '</span>';
-        numColumns++;
     };
+    
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
