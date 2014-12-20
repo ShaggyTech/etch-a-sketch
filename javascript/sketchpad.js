@@ -1,6 +1,6 @@
 // global variables
 var sketchpadWidth = 16;  // initial sketchpad width
-
+var drawModeID = 100;
 /* these aren't used for now, may use them later: 
 var newSketchpadWidth;
 var newSketchpadHeight
@@ -24,11 +24,17 @@ var scrollToBoard = function(){
     }, 400);
 }
 
+var clearBoard = function() {
+        $sketchpad.empty("span");
+        drawSketchpad(sketchpadWidth);
+}
+
 // builds the sketchpad
 var drawSketchpad = function(width) {
     var squareSize = $sketchpad.innerWidth() / width;
     var sketchpadArray = [];
     numSquares = 0;
+    numColumns = 0;
     for (x = 0; x < width; x++) {
         sketchpadArray += '<span class="column-counter">';
         for (i = 0; i < width; i++) {
@@ -36,12 +42,13 @@ var drawSketchpad = function(width) {
             numSquares += 1;
         };
         sketchpadArray += '</span>';
+        numColumns++;
     };
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
-
+    console.log(numColumns);
     scrollToBoard();
 
     /* these aren't used for now, may use them later: 
@@ -54,30 +61,7 @@ var drawSketchpad = function(width) {
     */
 }
 
-// generate a random color
-var randomColor = function(){
-    var hue = "rgb(" + (Math.floor(Math.random() * 256)) + "," + (Math.floor(Math.random() * 256)) + "," + (Math.floor(Math.random() * 256)) + ")";
-    return hue;
-}
-
-// disables the board when the cursor leaves the sketchpad and shows the instructions to re-enable
-var disableBoardOnLeave =  function() {
-    $sketchpad.mouseleave(function(){
-        $square.off();
-        $instructions.show();
-    });
-}
-
-// resets all squares to default color
-var clearBoard = function() {
-    $(".clear-button").on("click", function(){
-        $sketchpad.empty("span");
-        drawSketchpad(sketchpadWidth);
-    });
-}
-
-// upon first loading the page, wait until the user selects a mode, 
-// and only after that do we draw the sketchpad and show certain buttons
+// when first loading the page, first sketchpad created upon selection of draw mode
 var firstDrawMode = function() {
     $(".dropdown-menu li").on("click", function(){
         if ($(".dropdown-button").hasClass("btn-danger")) { // if this is the first time we are drawing the board
@@ -86,76 +70,85 @@ var firstDrawMode = function() {
             $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
             drawSketchpad(sketchpadWidth);  // create the initial board
         };
-    });    
+    }); 
 }
 
-// default draw mode
-var drawModeDefault = function() {
-    $(".default").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(this).hide();
-        $modeMenuText.text("Draw Mode: Default");
-        $sketchpad.on("mousedown", function(){
-            $square.on("mouseenter", function(){
+// changes the draw mode based on currently selected draw mode option
+var drawMode = function(mode){
+    $sketchpad.off();
+    switch(mode)
+    {        
+        case 1: $(".dropdown-menu > li").show();
+                $(".default").hide();
+                $modeMenuText.text("Draw Mode: Default");
+                paintbrush(mode);
+                break;
+
+        case 2: $(".dropdown-menu > li").show();
+                $(".random").hide();
+                $modeMenuText.text("Draw Mode: Random Colors");
+                
+                paintbrush(mode);
+                break;
+
+        case 3: $(".dropdown-menu > li").show();
+                $(".incremental").hide();
+                $modeMenuText.text("Draw Mode: Incremental Opacity");
+                paintbrush(mode);
+                break;
+
+        case 4: $(".dropdown-menu > li").show();
+                $(".trail").hide();
+                $modeMenuText.text("Draw Mode: Leave a Trail");
+                paintbrush(mode);
+                break;
+
+        default: break;
+    }
+}
+
+var paintbrush = function(mode){
+    $sketchpad.on("mousedown", function(){
+        $square.on("mouseenter", function(){
+
+            var rgb = getRGB($(this).css("background-color"));
+
+            if (mode === 1) {
                 $(this).css("background-color", "black");
-                $instructions.hide();
-            });
-        });
-        disableBoardOnLeave();
-    });
-}
+                $instructions.hide();  
+            }
 
-//random color draw mode
-var drawModeRandom = function() {
-    $(".random").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(this).hide();
-        $modeMenuText.text("Draw Mode: Random Colors");
-        $sketchpad.on("mousedown", function(){
-            $square.on("mouseenter", function(){
+            else if (mode === 2) {
                 var color = randomColor(); 
                 $(this).css("background-color", color);
                 $instructions.hide();
-            });
-        });
-        disableBoardOnLeave();
-    });
-}
+            }
 
-// incremental opacity draw mode
-var drawModeIncrement = function() {
-    $(".increment").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(this).hide();
-        $modeMenuText.text("Draw Mode: Incremental Opacity");
-        $sketchpad.on("mousedown", function(){
-            $square.on("mouseenter", function(){
-                var count = $(this).data("increment-count");
-                var colorIncrement;
-                if (!count) count = 1;
-                if (count < 10) count++;
-                $(this).data("increment-count", count);
-                colorIncrement = 256 - Math.floor(25 * count);
-                $(this).css({"background-color": "rgb(" + colorIncrement + ", " + colorIncrement + ", " + colorIncrement + ")"});
+            else if (mode === 3) {
+                for(var i = 0; i < rgb.length; i++){
+                    rgb[i] = Math.max(0, rgb[i] - 10);
+                }
+                var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+                $(this).css("background-color", newColor);
                 $instructions.hide();
-            });
-        });
-        disableBoardOnLeave();
-    });
-}
+            }
 
-var drawModeTrail = function(){
-    $(".trail").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(this).hide();
-        $modeMenuText.text("Draw Mode: Leave a Trail");
-        $sketchpad.on("mousedown", function(){
-            $square.on("mouseenter", function(){
-                // figure this part out!
-            });
+            else if (mode === 4) {
+                squareColor = $(this).css("background-color");
+                $(this).css("background-color", rgb);
+                $(this).stop(true, true).fadeTo(1000, 0.0, function() {
+                    $(this).css({"background-color": rgb, "opacity": "1"});
+                });
+                $instructions.hide();
+            }
+
+            else {
+                return;
+            }
+            
         });
-        disableBoardOnLeave();
     });
+    disableBoardOnLeave();
 }
 
 // get the new size, input by the user by clicking the "Change Board Size" button
@@ -186,24 +179,53 @@ var changeSize = function() {
     });
 }
 
-var listeners = function() {
-    firstDrawMode();
-    drawModeDefault();
-    drawModeRandom();
-    drawModeIncrement();
-    drawModeTrail();
-    changeSize();
-    clearBoard();
+// disables the board when the cursor leaves the sketchpad and shows the instructions to re-enable
+var disableBoardOnLeave =  function() {
+    $sketchpad.mouseleave(function(){
+        $square.off();
+        $instructions.show();
+    });
 }
 
-// necessary to make the bootstrap buttons remove the active state class immediately after clicking them
-$(".btn").on("mouseup", function(){
-    $(this).blur();
-});
+var menuListeners = function(){
+    $(".default").on("click", function() {
+        drawModeID = 1; 
+        drawMode(drawModeID);
+    });
+    $(".random").on("click", function() {
+        drawModeID = 2;
+        drawMode(drawModeID);
+    });
+    $(".increment").on("click", function() {
+        drawModeID = 3;
+        drawMode(drawModeID);
+    });
+    $(".trail").on("click", function() {
+        drawModeID = 4;
+        drawMode(drawModeID);
+    });
+    $(".clear-button").on("click", function(){
+        clearBoard();
+    });
+}
 
-$(".hidden-initially").hide();    // makes sure these divs and buttons are initially hidden
+var globalListeners = function(){
+    // necessary to make the bootstrap buttons remove the active state class immediately after clicking them
+    $(".btn").on("mouseup", function(){
+        $(this).blur();
+    });
+
+    // makes sure these divs and buttons are initially hidden
+    $(".hidden-initially").hide();    
+}
+
+var listeners = function() {
+    globalListeners();
+    menuListeners();
+    changeSize();
+    firstDrawMode();
+}
 
 $(document).ready(function(){    
     listeners();
-
 })
