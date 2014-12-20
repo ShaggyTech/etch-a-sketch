@@ -1,14 +1,10 @@
 // global variables
 var sketchpadWidth = 16;  // initial sketchpad width
 var drawModeID = 100;
-/* these aren't used for now, may use them later: 
-var newSketchpadWidth;
-var newSketchpadHeight
-var boardWidth;
-var boardHeight;
+var totalColumns;
+var totalRows;
 var numSquares;
 var numColumns;
-*/
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
@@ -31,13 +27,20 @@ var clearBoard = function() {
 
 // builds the sketchpad
 var drawSketchpad = function(width) {
-    var squareSize = $sketchpad.innerWidth() / width;
+    var squareSize = $sketchpad.width() / width;
+    var totalColumns = $sketchpad.width() / squareSize;
+    var totalRows = $sketchpad.height() / squareSize;
     var sketchpadArray = [];
     numSquares = 0;
     numColumns = 0;
-    for (x = 0; x < width; x++) {
+
+    console.log("squareSize: " + squareSize);
+    console.log("totalColumns: " + totalColumns);
+    console.log("totalRows: " + totalRows);
+
+    for (x = 0; x < totalColumns; x++) {
         sketchpadArray += '<span class="column-counter">';
-        for (i = 0; i < width; i++) {
+        for (i = 0; i < totalRows; i++) {
             sketchpadArray += '<span class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
             numSquares += 1;
         };
@@ -48,17 +51,8 @@ var drawSketchpad = function(width) {
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
-    console.log(numColumns);
     scrollToBoard();
-
-    /* these aren't used for now, may use them later: 
-    numColumns = 0;
-    numColumns += $("#sketchpad > .column-counter").length;
-    boardHeight = numColumns;
-    boardWidth = numSquares / numColumns;
-    newSketchpadHeight = squareSize * boardHeight;
-    newSketchpadWidth = squareSize * boardWidth;
-    */
+    console.log(numColumns);
 }
 
 // when first loading the page, first sketchpad created upon selection of draw mode
