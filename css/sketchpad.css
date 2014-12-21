@@ -109,7 +109,7 @@ a:hover {
 
 .instructions {
     margin: auto;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-align: center;
     height: 35px;
     width: 720px;
@@ -120,6 +120,11 @@ a:hover {
     cursor: default;
     font-weight: bold;
     font-size: 1.1em;
+}
+
+.instructions-text > img {
+    height: 30px;
+    padding: 0px 5px 0px 5px;
 }
 
 #sketchpad {

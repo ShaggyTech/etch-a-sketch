@@ -56,7 +56,6 @@ var drawSketchpad = function(width) {
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
-    scrollToBoard();
 }
 
 // when first loading the page, first sketchpad created upon selection of draw mode
@@ -66,7 +65,8 @@ var firstDrawMode = function() {
             $(".first-menu").removeClass("first-menu");  // removes the right border radius from the left menu button
             $(".dropdown-button").removeClass("btn-danger").addClass("btn-success"); // change the color of the left menu button to green
             $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
-            drawSketchpad(sketchpadWidth);  // create the initial board 
+            drawSketchpad(sketchpadWidth);  // create the initial board
+            scrollToBoard();
         };
     }); 
 }
@@ -169,27 +169,8 @@ var changeSize = function() {
             sketchpadWidth = newSize;
             $sketchpad.empty();
             drawSketchpad(sketchpadWidth);
-            changeRowColor();
         };
     });
-}
-
-// disables the board when the cursor leaves the sketchpad and shows the instructions to re-enable
-var disableBoardOnLeave =  function() {
-    $sketchpad.mouseleave(function(){
-        $square.off();
-        $instructions.show();
-    });
-}
-
-var toggleDrawing = function() {
-    if (!keyIsDown) {
-        $square.off();
-        $instructions.show();
-    }
-    else {
-        return;
-    };
 }
 
 var menuListeners = function(){
