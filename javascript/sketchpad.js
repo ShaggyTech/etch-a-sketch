@@ -5,6 +5,7 @@ var drawModeID = 100;
 var totalColumns;
 var totalRows;
 var numSquares;
+var keyIsDown = false;
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
@@ -46,7 +47,7 @@ var drawSketchpad = function(width) {
             numSquares += 1;
             rowID++
             sketchpadArray += '<span data-column="' + columnId + '"data-row="' + rowID +
-                              '"class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
+                              '"class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px;"></span>';
         };
         rowID = 0;
     };
@@ -72,31 +73,34 @@ var firstDrawMode = function() {
 
 // changes the draw mode based on currently selected draw mode option
 var drawMode = function(mode){
-    $sketchpad.off();
+    
     switch(mode)
     {        
         case 1: $(".dropdown-menu > li").show();
                 $(".default").hide();
                 $modeMenuText.text("Draw Mode: Default");
+                $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
         case 2: $(".dropdown-menu > li").show();
                 $(".random").hide();
                 $modeMenuText.text("Draw Mode: Random Colors");
-                
+                $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
         case 3: $(".dropdown-menu > li").show();
                 $(".incremental").hide();
                 $modeMenuText.text("Draw Mode: Darken");
+                $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
         case 4: $(".dropdown-menu > li").show();
                 $(".trail").hide();
                 $modeMenuText.text("Draw Mode: Snake");
+                $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
@@ -105,26 +109,27 @@ var drawMode = function(mode){
 }
 
 var paintbrush = function(mode){
-    $sketchpad.on("mousedown", function(){
-        $square.on("mouseenter", function(){
+    $sketchpad.on("mouseenter.draw", ".square", function(){
             var rgb = getRGB($(this).css("background-color"));
-
             if (mode === 1) {
-                $(this).css("background-color", "black");
-                $instructions.hide();  
+                if (keyIsDown) {
+                    $(this).css("background-color", "black");
+                }
             }
             else if (mode === 2) {
-                var color = randomColor(); 
-                $(this).css("background-color", color);
-                $instructions.hide();
+                var color = randomColor();
+                if (keyIsDown) {
+                    $(this).css("background-color", color);
+                }
             }
             else if (mode === 3) {
                 for(var i = 0; i < rgb.length; i++){
                     rgb[i] = Math.max(0, rgb[i] - 10);
                 }
                 var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-                $(this).css("background-color", newColor);
-                $instructions.hide();
+                if (keyIsDown) {
+                    $(this).css("background-color", newColor);
+                }
             }
             else if (mode === 4) {
                 squareColor = $(this).css("background-color");
@@ -137,9 +142,7 @@ var paintbrush = function(mode){
             else {
                 return;
             }
-        });
     });
-    disableBoardOnLeave();
 }
 
 // get the new size, input by the user by clicking the "Change Board Size" button
@@ -179,6 +182,16 @@ var disableBoardOnLeave =  function() {
     });
 }
 
+var toggleDrawing = function() {
+    if (!keyIsDown) {
+        $square.off();
+        $instructions.show();
+    }
+    else {
+        return;
+    };
+}
+
 var menuListeners = function(){
     $(".default").on("click", function() {
         drawModeID = 1; 
@@ -208,7 +221,18 @@ var globalListeners = function(){
     });
 
     // makes sure these divs and buttons are initially hidden
-    $(".hidden-initially").hide();    
+    $(".hidden-initially").hide();
+
+    // tells us whether the shift key is being held down
+    $("body").keydown(function(event){
+        if (event.which == 16) {
+            keyIsDown = true;
+            console.log("shift key down:" + keyIsDown)
+        }
+    }).keyup(function(){
+        keyIsDown = false;
+        console.log("shift key up:" + keyIsDown);
+    });    
 }
 
 var listeners = function() {
