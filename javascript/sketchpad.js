@@ -27,33 +27,34 @@ var clearBoard = function() {
 
 // builds the sketchpad
 var drawSketchpad = function(width) {
-    $sketchpad.css({"width": "740px", "height": "740px", "outline": "10px solid black", "background-color": "black"});
     var squareSize = $sketchpad.width() / width;
     var totalColumns = $sketchpad.width() / squareSize;
     var totalRows = $sketchpad.height() / squareSize;
     var sketchpadArray = [];
     numSquares = 0;
+    var columnId = 0;
+    var rowID = 0;
 
     console.log("squareSize: " + squareSize);
     console.log("totalColumns: " + totalColumns);
     console.log("totalRows: " + totalRows);
 
-    for (x = 0; x < totalColumns; x++) {
-        sketchpadArray += '<span class="column-counter">';
-        for (i = 0; i < totalRows; i++) {
-            sketchpadArray += '<span class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
+    for (var x = 0; x < totalColumns; x++) {
+        sketchpadArray += '<span class="columns">';
+        columnId++;
+        for (var i = 0; i < totalRows; i++) {
             numSquares += 1;
+            rowID++
+            sketchpadArray += '<span data-column="' + columnId + '"data-row="' + rowID +
+                              '"class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
         };
+        rowID = 0;
     };
 
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
-    console.log($(".column-counter").height());
     $instructions.show();
-
-    //$sketchpad.css({"width": "780px", "height": "780px"});
-
     scrollToBoard();
 }
 
@@ -64,7 +65,7 @@ var firstDrawMode = function() {
             $(".first-menu").removeClass("first-menu");  // removes the right border radius from the left menu button
             $(".dropdown-button").removeClass("btn-danger").addClass("btn-success"); // change the color of the left menu button to green
             $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
-            drawSketchpad(sketchpadWidth);  // create the initial board
+            drawSketchpad(sketchpadWidth);  // create the initial board 
         };
     }); 
 }
@@ -106,20 +107,17 @@ var drawMode = function(mode){
 var paintbrush = function(mode){
     $sketchpad.on("mousedown", function(){
         $square.on("mouseenter", function(){
-
             var rgb = getRGB($(this).css("background-color"));
 
             if (mode === 1) {
                 $(this).css("background-color", "black");
                 $instructions.hide();  
             }
-
             else if (mode === 2) {
                 var color = randomColor(); 
                 $(this).css("background-color", color);
                 $instructions.hide();
             }
-
             else if (mode === 3) {
                 for(var i = 0; i < rgb.length; i++){
                     rgb[i] = Math.max(0, rgb[i] - 10);
@@ -128,7 +126,6 @@ var paintbrush = function(mode){
                 $(this).css("background-color", newColor);
                 $instructions.hide();
             }
-
             else if (mode === 4) {
                 squareColor = $(this).css("background-color");
                 $(this).css("background-color", rgb);
@@ -137,11 +134,9 @@ var paintbrush = function(mode){
                 });
                 $instructions.hide();
             }
-
             else {
                 return;
             }
-            
         });
     });
     disableBoardOnLeave();
@@ -171,6 +166,7 @@ var changeSize = function() {
             sketchpadWidth = newSize;
             $sketchpad.empty();
             drawSketchpad(sketchpadWidth);
+            changeRowColor();
         };
     });
 }

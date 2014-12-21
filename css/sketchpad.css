@@ -125,16 +125,19 @@ a:hover {
     margin: auto;
     width: 740px;
     height: 740px;
+    outline: 10px solid black;
+    background-color: black;
 }
 
 .square {
+    margin: 0px;
     float: left;
     background-color: #DEDEDE;
     outline: black solid 1px;
     opacity: 1;
 }
 
-.column-counter {
+.columns {
     float: left;
     clear: right;
 }
