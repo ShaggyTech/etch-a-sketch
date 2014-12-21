@@ -1,5 +1,6 @@
 // global variables
-var sketchpadWidth = 16;  // initial sketchpad width
+var defaultSketchpadWidth = 24;
+var sketchpadWidth = defaultSketchpadWidth;  // initial sketchpad width
 var drawModeID = 100;
 var totalColumns;
 var totalRows;
@@ -26,6 +27,7 @@ var clearBoard = function() {
 
 // builds the sketchpad
 var drawSketchpad = function(width) {
+    $sketchpad.css("width", "740px");
     var squareSize = $sketchpad.width() / width;
     var totalColumns = $sketchpad.width() / squareSize;
     var totalRows = $sketchpad.height() / squareSize;
@@ -48,9 +50,9 @@ var drawSketchpad = function(width) {
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
+    $sketchpad.css("width", "750px");
     $instructions.show();
     scrollToBoard();
-    console.log(numColumns);
 }
 
 // when first loading the page, first sketchpad created upon selection of draw mode
@@ -85,13 +87,13 @@ var drawMode = function(mode){
 
         case 3: $(".dropdown-menu > li").show();
                 $(".incremental").hide();
-                $modeMenuText.text("Draw Mode: Incremental Opacity");
+                $modeMenuText.text("Draw Mode: Darken");
                 paintbrush(mode);
                 break;
 
         case 4: $(".dropdown-menu > li").show();
                 $(".trail").hide();
-                $modeMenuText.text("Draw Mode: Leave a Trail");
+                $modeMenuText.text("Draw Mode: Snake");
                 paintbrush(mode);
                 break;
 
@@ -154,7 +156,7 @@ var changeSize = function() {
         }
         // if prompt is left blank the use default size
         else if (newSize === ""){
-            sketchpadWidth = 16;
+            sketchpadWidth = defaultSketchpadWidth;
             $sketchpad.empty();
             drawSketchpad(sketchpadWidth);
         }
