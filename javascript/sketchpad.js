@@ -27,7 +27,7 @@ var clearBoard = function() {
 
 // builds the sketchpad
 var drawSketchpad = function(width) {
-    $sketchpad.css("width", "740px");
+    $sketchpad.css({"width": "740px", "height": "740px", "outline": "10px solid black", "background-color": "black"});
     var squareSize = $sketchpad.width() / width;
     var totalColumns = $sketchpad.width() / squareSize;
     var totalRows = $sketchpad.height() / squareSize;
@@ -44,14 +44,16 @@ var drawSketchpad = function(width) {
             sketchpadArray += '<span class="square" style="width:' + squareSize + 'px; height:' + squareSize + 'px; margin: 0;"></span>';
             numSquares += 1;
         };
-        sketchpadArray += '</span>';
     };
-    
+
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
-    $sketchpad.css("width", "750px");
+    console.log($(".column-counter").height());
     $instructions.show();
+
+    //$sketchpad.css({"width": "780px", "height": "780px"});
+
     scrollToBoard();
 }
 
@@ -145,25 +147,11 @@ var paintbrush = function(mode){
     disableBoardOnLeave();
 }
 
-var drawModeTrail = function(){
-    $(".trail").on("click", function(){
-        $(".dropdown-menu > li").show();
-        $(this).hide();
-        $modeMenuText.text("Draw Mode: Leave a Trail");
-        $sketchpad.on("mousedown", function(){
-            $square.on("mouseenter", function(){
-                // figure this part out!
-            });
-        });
-        disableBoardOnLeave();
-    });
-}
-
 // get the new size, input by the user by clicking the "Change Board Size" button
 var changeSize = function() {
     $(".size-button").on("click", function(){
         // prompt the user for a new size
-        var newSize = prompt("Please enter a new size (1-64) for the sketch board.\nLeave blank for default size.");
+        var newSize = prompt("Please enter desired squares per row for the sketch board.\nMin: 1 | Max: 64\nLeave blank for default size.");
         // if the prompt is left blank then resize to default size
         if (newSize === null) {
             return;
@@ -193,16 +181,6 @@ var disableBoardOnLeave =  function() {
         $square.off();
         $instructions.show();
     });
-=======
-var listeners = function() {
-    firstDrawMode();
-    drawModeDefault();
-    drawModeRandom();
-    drawModeIncrement();
-    drawModeTrail();
-    changeSize();
-    clearBoard();
->>>>>>> master
 }
 
 var menuListeners = function(){
