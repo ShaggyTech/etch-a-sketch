@@ -134,6 +134,11 @@ a:hover {
     opacity: 1;
 }
 
+.column-counter {
+    float: left;
+    clear: right;
+}
+
 footer {
     margin: auto;
     width: 100%;
