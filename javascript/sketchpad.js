@@ -145,6 +145,20 @@ var paintbrush = function(mode){
     disableBoardOnLeave();
 }
 
+var drawModeTrail = function(){
+    $(".trail").on("click", function(){
+        $(".dropdown-menu > li").show();
+        $(this).hide();
+        $modeMenuText.text("Draw Mode: Leave a Trail");
+        $sketchpad.on("mousedown", function(){
+            $square.on("mouseenter", function(){
+                // figure this part out!
+            });
+        });
+        disableBoardOnLeave();
+    });
+}
+
 // get the new size, input by the user by clicking the "Change Board Size" button
 var changeSize = function() {
     $(".size-button").on("click", function(){
@@ -179,6 +193,16 @@ var disableBoardOnLeave =  function() {
         $square.off();
         $instructions.show();
     });
+=======
+var listeners = function() {
+    firstDrawMode();
+    drawModeDefault();
+    drawModeRandom();
+    drawModeIncrement();
+    drawModeTrail();
+    changeSize();
+    clearBoard();
+>>>>>>> master
 }
 
 var menuListeners = function(){
