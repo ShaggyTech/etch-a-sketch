@@ -5,6 +5,8 @@ body {
     margin-bottom: 50px;
 }
 
+
+
 .top {
     height: 50px;
 }
@@ -133,6 +135,20 @@ a:hover {
     height: 740px;
     outline: 10px solid black;
     background-color: black;
+}
+
+#container {
+    margin: auto;
+    display: -webkit-flex;
+    display: flex;
+    height: 760px;
+    width: 835px;
+}
+
+.right-pad-menu {
+    float: right;
+    position: relative;
+    right: -12px;
 }
 
 .square {

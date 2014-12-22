@@ -66,11 +66,22 @@ var firstDrawMode = function() {
             $(".dropdown-button").removeClass("btn-danger").addClass("btn-success"); // change the color of the left menu button to green
             $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
             drawSketchpad(sketchpadWidth);  // create the initial board
+            centerSketchPad();
             scrollToBoard();
         };
     }); 
 }
 
+var centerSketchPad = function(){
+    var windowWidth = $(window).width();
+    var containerWidth = $("#container").outerWidth();
+    var rightMenuWidth = $(".right-pad-menu").width();
+    var padRight = (windowWidth - containerWidth - rightMenuWidth) / 2;
+    $('#container').css({
+        position:'absolute',
+        right: padRight,
+    });
+}
 // changes the draw mode based on currently selected draw mode option
 var drawMode = function(mode){
     
@@ -162,7 +173,7 @@ var changeSize = function() {
         }
         // make sure the user entered a valid number
         else if (isNaN(newSize) || newSize < 1 || newSize > 64) {
-            alert('"' + newSize + '" is not a valid NUMBER, try again.');
+            alert('"' + newSize + '" is not a valid NUMBER, try again.');S
         }
         // otherwise, change the size of the sketchpad
         else {
@@ -216,7 +227,11 @@ var globalListeners = function(){
             $(this).css('cursor','pointer');
         });    
 
-    });   
+    });
+
+    $(window).resize(function(){
+        centerSketchPad();
+    });
 }
 
 var listeners = function() {
