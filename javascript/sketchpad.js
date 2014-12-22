@@ -173,7 +173,7 @@ var changeSize = function() {
         }
         // make sure the user entered a valid number
         else if (isNaN(newSize) || newSize < 1 || newSize > 64) {
-            alert('"' + newSize + '" is not a valid NUMBER, try again.');S
+            alert('"' + newSize + '" is not a valid NUMBER, try again.');
         }
         // otherwise, change the size of the sketchpad
         else {

@@ -5,8 +5,6 @@ body {
     margin-bottom: 50px;
 }
 
-
-
 .top {
     height: 50px;
 }
@@ -148,7 +146,7 @@ a:hover {
 .right-pad-menu {
     float: right;
     position: relative;
-    right: -12px;
+    right: -10px;
 }
 
 .square {
