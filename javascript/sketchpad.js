@@ -205,15 +205,18 @@ var globalListeners = function(){
     $(".hidden-initially").hide();
 
     // tells us whether the shift key is being held down
-    $("body").keydown(function(event){
-        if (event.which == 16) {
-            keyIsDown = true;
-            console.log("shift key down:" + keyIsDown)
-        }
-    }).keyup(function(){
-        keyIsDown = false;
-        console.log("shift key up:" + keyIsDown);
-    });    
+    $sketchpad.on("click", function(){
+        $(this).on("mousedown", function(event){
+            if (event.which == 1) {
+                keyIsDown = true;
+                $(this).css('cursor','url(./img/paintbrush.png),auto');
+            }
+        }).on("mouseup", function(){
+            keyIsDown = false;
+            $(this).css('cursor','pointer');
+        });    
+
+    });   
 }
 
 var listeners = function() {

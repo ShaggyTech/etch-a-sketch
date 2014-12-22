@@ -141,6 +141,9 @@ a:hover {
     background-color: #DEDEDE;
     outline: black solid 1px;
     opacity: 1;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;
 }
 
 .columns {
