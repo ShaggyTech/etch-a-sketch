@@ -1,8 +1,21 @@
 body {
     background-color: #0f0f0f;
     background-image: url('../img/ios-linen.jpg');
-    color:#ffffff;
-    margin-bottom: 50px;
+    color:#DEDEDE;
+    font-family: "Arial Black", Gadget, sans-serif;
+}
+
+.header,
+#myName
+{
+    background: rgb(69,72,77); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 }
 
 .top {
@@ -43,7 +56,6 @@ a:hover {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.25);
     font-family: "Arial Black", Gadget, sans-serif;
     border-bottom: 1px solid black;
 }
@@ -63,12 +75,11 @@ a:hover {
 }
 
 #myName {
-    width: 250px;
-    margin-top: 7.7px;
-    background-color: rgba(0, 0, 0, 0.50);
+    position: absolute;
+    left: 90px;
+    top: 50px;
+    width: 125px;
     font-size: 0.75em;
-    float: right;
-    clear: left;
     text-align: center;
     border-right: 2px solid black;
     border-left: 2px solid black;
@@ -82,8 +93,10 @@ a:hover {
 }
 
 #myName > span {
+    position: absolute;
+    top: -11px;
+    left: 5px;
     font-size: 0.75em;
-    padding-right: 15px;
 }
 
 .header-right {
@@ -92,7 +105,7 @@ a:hover {
 }
 
 .menu {
-    margin-bottom: 10px;
+    margin-bottom: 50px;
     width: 100%;
     height: 100%;
     text-align: center;
@@ -107,51 +120,74 @@ a:hover {
     display: none;
 }
 
+#container {
+    margin-bottom: 50px;
+    display: -webkit-flex;
+    display: flex;
+    height: 760px;
+    width: 760px;
+    background-color: black;
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: black;
+}
+
+#sketchpad-menu {
+    width: 760px;
+    height: 39px;
+    position: absolute;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    top: -39px;
+    background: rgba(82,82,82,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(82,82,82,1)), color-stop(100%, rgba(0,0,0,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525252', endColorstr='#000000', GradientType=1 );
+}
+
+.left-pad-menu,
+.instructions,
+.right-pad-menu
+{   
+    position: absolute;
+    top: 9px;
+    font-weight: bold;
+}
+
+.left-pad-menu {
+    left: 10px;
+}
+
 .instructions {
-    margin: auto;
-    margin-bottom: 10px;
     text-align: center;
-    height: 35px;
-    width: 720px;
+    position: absolute;
+    left: 240px;
+}
+
+.right-pad-menu {
+    right: 10px;
 }
 
 .instructions-text {
     pointer-events: none;
     cursor: default;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-.instructions-text > img {
-    height: 30px;
-    padding: 0px 5px 0px 5px;
 }
 
 #sketchpad {
-    margin: auto;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     width: 740px;
     height: 740px;
-    outline: 10px solid black;
-    background-color: black;
-}
-
-#container {
-    margin: auto;
-    display: -webkit-flex;
-    display: flex;
-    height: 760px;
-    width: 835px;
-}
-
-.right-pad-menu {
-    float: right;
-    position: relative;
-    right: -10px;
 }
 
 .square {
     margin: 0px;
     float: left;
+    clear: right;
     background-color: #DEDEDE;
     outline: black solid 1px;
     opacity: 1;
@@ -168,7 +204,7 @@ a:hover {
 footer {
     margin: auto;
     width: 100%;
-    height: 40px;
+    height: 50px;
     background-color: rgba(0, 0, 0, 0.25);
     font-family: "Arial Black", Gadget, sans-serif;
     padding-top: 5px;

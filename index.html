@@ -21,8 +21,8 @@
             <p id="myName"><span>created by</span>BRANDON EICHLER</p>
         </div>
         <div class="header-right top">
-            <a class="top" href="https://github.com/vdubmastertech/etch-a-sketch" target="_newtab">Source Code</a>
-            <a class="top" href="http://www.theodinproject.com/web-development-101/javascript-and-jquery" target="_newtab">The Odin Project</a>
+            <a class="top" href="https://github.com/vdubmastertech/etch-a-sketch" target="newtab">Source Code</a>
+            <a class="top" href="http://www.theodinproject.com/web-development-101/javascript-and-jquery" target="newtab">The Odin Project</a>
         </div>
     </div>
     <div class="menu">
@@ -44,21 +44,29 @@
             <button type="button" class="btn btn-danger btn-lg clear-button hidden-initially">Clear Board</button>
         </div>
     </div>
-    <div class="instructions">
-        <span></span>
-        <span class="btn btn-warning instructions-text hidden-initially"><span class="glyphicon glyphicon-exclamation-sign">
-            </span> Hold down LEFT MOUSE BUTTON to draw!</span>
-    </div>
     <div id="container" class="hidden-initially">
+        <div id="sketchpad-menu">
+            <div class="instructions">
+                <span class="btn btn-warning btn-sm instructions-text"><span class="glyphicon glyphicon-exclamation-sign">
+                </span> Hold down LEFT MOUSE BUTTON to draw!</span>
+            </div>
+            <div class="left-pad-menu">
+                <ul class="nav">
+                    <li><button type="button" class="btn btn-sm brush-mode-button">Brush Type</button></li>
+                </ul>
+            </div>
+            <div class="right-pad-menu">
+                <ul class="nav">
+                    <li><button type="button" class="btn btn-sm color-button">Color</button></li>
+                </ul>
+            </div>
+        </div>
         <div id="sketchpad">
             <!-- squares will be added here -->
         </div>
-        <ul class="nav nav-stacked right-pad-menu hidden-initially">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Mess</a></li>
-        </ul>
+        
     </div>
+    
 
     <script src="javascript/jquery-2.1.3.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>

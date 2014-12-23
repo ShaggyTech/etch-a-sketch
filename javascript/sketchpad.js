@@ -28,7 +28,7 @@ var clearBoard = function() {
 
 // builds the sketchpad
 var drawSketchpad = function(width) {
-    var squareSize = $sketchpad.width() / width;
+    var squareSize = intRound($sketchpad.width() / width, 6);
     var totalColumns = $sketchpad.width() / squareSize;
     var totalRows = $sketchpad.height() / squareSize;
     var sketchpadArray = [];
@@ -40,10 +40,10 @@ var drawSketchpad = function(width) {
     console.log("totalColumns: " + totalColumns);
     console.log("totalRows: " + totalRows);
 
-    for (var x = 0; x < totalColumns; x++) {
+    for (var x = 0; x < sketchpadWidth; x++) {
         sketchpadArray += '<span class="columns">';
         columnId++;
-        for (var i = 0; i < totalRows; i++) {
+        for (var i = 0; i < sketchpadWidth; i++) {
             numSquares += 1;
             rowID++
             sketchpadArray += '<span data-column="' + columnId + '"data-row="' + rowID +
@@ -51,7 +51,7 @@ var drawSketchpad = function(width) {
         };
         rowID = 0;
     };
-
+    console.log(numSquares);
     $sketchpad.empty("span");
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
@@ -75,12 +75,14 @@ var firstDrawMode = function() {
 var centerSketchPad = function(){
     var windowWidth = $(window).width();
     var containerWidth = $("#container").outerWidth();
-    var rightMenuWidth = $(".right-pad-menu").width();
-    var padRight = (windowWidth - containerWidth - rightMenuWidth) / 2;
+    var padRight = (windowWidth - containerWidth) / 2;
     $('#container').css({
         position:'absolute',
         right: padRight,
     });
+    console.log(windowWidth);
+    console.log(containerWidth);
+    console.log(padRight);
 }
 // changes the draw mode based on currently selected draw mode option
 var drawMode = function(mode){
@@ -125,12 +127,20 @@ var paintbrush = function(mode){
             if (mode === 1) {
                 if (keyIsDown) {
                     $(this).css("background-color", "black");
+                    $instructions.hide();
+                }
+                else {
+                    $instructions.show();
                 }
             }
             else if (mode === 2) {
                 var color = randomColor();
                 if (keyIsDown) {
                     $(this).css("background-color", color);
+                    $instructions.hide();
+                }
+                else {
+                    $instructions.show();
                 }
             }
             else if (mode === 3) {
@@ -140,6 +150,10 @@ var paintbrush = function(mode){
                 var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
                 if (keyIsDown) {
                     $(this).css("background-color", newColor);
+                    $instructions.hide();
+                }
+                else {
+                    $instructions.show();
                 }
             }
             else if (mode === 4) {
@@ -215,7 +229,7 @@ var globalListeners = function(){
     // makes sure these divs and buttons are initially hidden
     $(".hidden-initially").hide();
 
-    // tells us whether the shift key is being held down
+    // tells us whether the left mouse is being held down
     $sketchpad.on("click", function(){
         $(this).on("mousedown", function(event){
             if (event.which == 1) {

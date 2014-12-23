@@ -21,3 +21,9 @@ var randomColor = function(){
     var hue = "rgb(" + (Math.floor(Math.random() * 256)) + "," + (Math.floor(Math.random() * 256)) + "," + (Math.floor(Math.random() * 256)) + ")";
     return hue;
 }
+
+// round an integer "decimals" places
+// ex. round(1.005, 2); // 1.01
+function intRound(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
