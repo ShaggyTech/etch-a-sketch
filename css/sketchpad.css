@@ -104,16 +104,11 @@ a:hover {
     position: relative;
 }
 
-.menu {
+.initial-selection {
     margin-bottom: 50px;
     width: 100%;
     height: 100%;
     text-align: center;
-}
-
-.first-menu {
-    border-top-right-radius: 4px !important;
-    border-bottom-right-radius: 4px !important;
 }
 
 .hidden-initially {
@@ -121,9 +116,10 @@ a:hover {
 }
 
 #container {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 85px;
     margin-bottom: 50px;
-    display: -webkit-flex;
-    display: flex;
     height: 760px;
     width: 760px;
     background-color: black;
@@ -132,12 +128,13 @@ a:hover {
 }
 
 #sketchpad-menu {
-    width: 760px;
-    height: 39px;
     position: absolute;
+    width: 760px;
+    height: 85px;
+    top: -85px;
+
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-    top: -39px;
     background: rgba(82,82,82,1);
     background: -moz-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(82,82,82,1)), color-stop(100%, rgba(0,0,0,1)));
@@ -148,32 +145,55 @@ a:hover {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525252', endColorstr='#000000', GradientType=1 );
 }
 
-.left-pad-menu,
-.instructions,
-.right-pad-menu
+.clear-button,
+.brush-mode-button,
+.size-button,
+.draw-mode-button
 {   
     position: absolute;
-    top: 9px;
     font-weight: bold;
 }
 
-.left-pad-menu {
+.brush-mode-button,
+.clear-button,
+.size-button 
+{
+    bottom: 0px;
+}
+
+.brush-mode-button {
+    
     left: 10px;
+}
+
+.clear-button {
+    right: 10px;
+}
+
+.size-button {
+    right: 72px;
+
+}
+
+.draw-mode-button {
+    left: 100px;
+    bottom: 0px;
+    text-align: center;
 }
 
 .instructions {
     text-align: center;
     position: absolute;
-    left: 240px;
+    left: 221px;
+    top: 10px;
 }
 
-.right-pad-menu {
-    right: 10px;
-}
+
 
 .instructions-text {
     pointer-events: none;
     cursor: default;
+    color: black;
 }
 
 #sketchpad {

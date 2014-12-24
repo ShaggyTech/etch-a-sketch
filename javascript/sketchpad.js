@@ -60,16 +60,19 @@ var drawSketchpad = function(width) {
 
 // when first loading the page, first sketchpad created upon selection of draw mode
 var firstDrawMode = function() {
-    $(".dropdown-menu li").on("click", function(){
+    $(".first-menu-dropdown li").on("click", function(){
+        
         if ($(".dropdown-button").hasClass("btn-danger")) { // if this is the first time we are drawing the board
-            $(".first-menu").removeClass("first-menu");  // removes the right border radius from the left menu button
-            $(".dropdown-button").removeClass("btn-danger").addClass("btn-success"); // change the color of the left menu button to green
             $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
+            $(".dropdown-button").removeClass("btn-danger").addClass("btn-default"); // change the color of the left menu button to green
             drawSketchpad(sketchpadWidth);  // create the initial board
             centerSketchPad();
             scrollToBoard();
         };
+        $(".initial-selection").hide();
     }); 
+
+
 }
 
 var centerSketchPad = function(){
@@ -80,9 +83,6 @@ var centerSketchPad = function(){
         position:'absolute',
         right: padRight,
     });
-    console.log(windowWidth);
-    console.log(containerWidth);
-    console.log(padRight);
 }
 // changes the draw mode based on currently selected draw mode option
 var drawMode = function(mode){
@@ -91,28 +91,28 @@ var drawMode = function(mode){
     {        
         case 1: $(".dropdown-menu > li").show();
                 $(".default").hide();
-                $modeMenuText.text("Draw Mode: Default");
+                $modeMenuText.text("Default");
                 $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
         case 2: $(".dropdown-menu > li").show();
                 $(".random").hide();
-                $modeMenuText.text("Draw Mode: Random Colors");
+                $modeMenuText.text("Random Colors");
                 $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
         case 3: $(".dropdown-menu > li").show();
                 $(".incremental").hide();
-                $modeMenuText.text("Draw Mode: Darken");
+                $modeMenuText.text("Darken");
                 $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
 
         case 4: $(".dropdown-menu > li").show();
                 $(".trail").hide();
-                $modeMenuText.text("Draw Mode: Snake");
+                $modeMenuText.text("Snake");
                 $sketchpad.off(".draw");
                 paintbrush(mode);
                 break;
@@ -244,7 +244,7 @@ var globalListeners = function(){
     });
 
     $(window).resize(function(){
-        centerSketchPad();
+      centerSketchPad();
     });
 }
 
