@@ -156,9 +156,10 @@ a:hover {
 
 .brush-mode-button,
 .clear-button,
-.size-button 
+.size-button, 
+.draw-mode-button
 {
-    bottom: 0px;
+    top: 10px;
 }
 
 .brush-mode-button {
@@ -177,7 +178,6 @@ a:hover {
 
 .draw-mode-button {
     left: 100px;
-    bottom: 0px;
     text-align: center;
 }
 
@@ -185,7 +185,7 @@ a:hover {
     text-align: center;
     position: absolute;
     left: 221px;
-    top: 10px;
+    bottom: 0px;
 }
 
 
