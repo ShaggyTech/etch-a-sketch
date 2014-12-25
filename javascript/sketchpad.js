@@ -64,88 +64,63 @@ var firstDrawMode = function() {
 }
 
 // changes the draw mode based on currently selected draw mode option
-var drawMode = function(mode){
-    
+var drawMode = function(mode, selector){
+    $sketchpad.off(".draw");
+    $(".dropdown-menu > li").show();
+    selector.hide();
     switch(mode)
     {        
-        case 1: $(".dropdown-menu > li").show();
-                $(".default").hide();
-                $modeMenuText.text("Default");
-                $sketchpad.off(".draw");
+        case 1: $modeMenuText.text("Default");
                 paintbrush(mode);
                 break;
-
-        case 2: $(".dropdown-menu > li").show();
-                $(".random").hide();
-                $modeMenuText.text("Random Colors");
-                $sketchpad.off(".draw");
+        case 2: $modeMenuText.text("Random Colors");
                 paintbrush(mode);
                 break;
-
-        case 3: $(".dropdown-menu > li").show();
-                $(".incremental").hide();
-                $modeMenuText.text("Darken");
-                $sketchpad.off(".draw");
+        case 3: $modeMenuText.text("Darken");
                 paintbrush(mode);
                 break;
-
-        case 4: $(".dropdown-menu > li").show();
-                $(".trail").hide();
-                $modeMenuText.text("Snake");
-                $sketchpad.off(".draw");
+        case 4: $modeMenuText.text("Snake");
                 paintbrush(mode);
                 break;
-
         default: break;
     }
 }
 
 var paintbrush = function(mode){
     $sketchpad.on("mouseenter.draw", ".square", function(){
-            var rgb = getRGB($(this).css("background-color"));
-            if (mode === 1) {
-                if (keyIsDown) {
+        var rgb = getRGB($(this).css("background-color"));
+        // these events DO NOT require the mouse button to be down
+        if (mode === 4) {                                       // snake mode
+            squareColor = $(this).css("background-color");
+            $(this).css("background-color", rgb);
+            $(this).stop(true, true).fadeTo(1000, 0.0, function() {
+                $(this).css({"background-color": rgb, "opacity": "1"});
+            });
+            $instructions.hide();
+        }
+        // these events DO require the mouse button to be down
+        else {
+            if (keyIsDown) {
+                $instructions.hide();                           // default mode
+                if (mode === 1) {
                     $(this).css("background-color", "black");
-                    $instructions.hide();
                 }
-                else {
-                    $instructions.show();
-                }
-            }
-            else if (mode === 2) {
-                var color = randomColor();
-                if (keyIsDown) {
+                else if (mode === 2) {                          // random color mode
+                    var color = randomColor();
                     $(this).css("background-color", color);
-                    $instructions.hide();
                 }
-                else {
-                    $instructions.show();
-                }
-            }
-            else if (mode === 3) {
-                for(var i = 0; i < rgb.length; i++){
-                    rgb[i] = Math.max(0, rgb[i] - 10);
-                }
-                var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-                if (keyIsDown) {
+                else if (mode === 3) {                          // darken mode
+                    for(var i = 0; i < rgb.length; i++){
+                        rgb[i] = Math.max(0, rgb[i] - 10);
+                    }
+                    var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
                     $(this).css("background-color", newColor);
-                    $instructions.hide();
                 }
-                else {
-                    $instructions.show();
-                }
-            }
-            else if (mode === 4) {
-                squareColor = $(this).css("background-color");
-                $(this).css("background-color", rgb);
-                $(this).stop(true, true).fadeTo(1000, 0.0, function() {
-                    $(this).css({"background-color": rgb, "opacity": "1"});
-                });
-                $instructions.hide();
             }
             else {
-                return;
+                $instructions.show();
             }
+        }
     });
 }
 
@@ -177,22 +152,22 @@ var changeSize = function() {
     });
 }
 
-var menuListeners = function(){
+var buttonListeners = function(){
     $(".default").on("click", function() {
         drawModeID = 1; 
-        drawMode(drawModeID);
+        drawMode(drawModeID, $(this));
     });
     $(".random").on("click", function() {
         drawModeID = 2;
-        drawMode(drawModeID);
+        drawMode(drawModeID, $(this));
     });
     $(".increment").on("click", function() {
         drawModeID = 3;
-        drawMode(drawModeID);
+        drawMode(drawModeID, $(this));
     });
     $(".trail").on("click", function() {
         drawModeID = 4;
-        drawMode(drawModeID);
+        drawMode(drawModeID, $(this));
     });
     $(".clear-button").on("click", function(){
         clearBoard();
@@ -221,15 +196,11 @@ var globalListeners = function(){
         });    
 
     });
-
-    //$(window).resize(function(){
-      //centerSketchPad();
-    //});
 }
 
 var listeners = function() {
     globalListeners();
-    menuListeners();
+    buttonListeners();
     changeSize();
     firstDrawMode();
 }
