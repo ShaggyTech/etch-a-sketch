@@ -175,10 +175,12 @@ a:hover {
 }
 
 .instructions {
+    width: 320px;
     display: block;
     text-align: center;
     position: relative;
     top: -16px;
+    left: 220px;
 }
 
 .instructions-text {
