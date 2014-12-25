@@ -25,13 +25,14 @@
             <a class="top" href="http://www.theodinproject.com/web-development-101/javascript-and-jquery" target="newtab">The Odin Project</a>
         </div>
     </div>
-    <div class="initial-selection menu">
+
+    <div class="initial-selection">
         <div class="btn-group">
-            <button type="button" class="btn btn-danger btn-lg dropdown-toggle dropdown-button first-menu" data-toggle="dropdown">
+            <button type="button" class="btn btn-danger btn-lg dropdown-toggle" data-toggle="dropdown">
             <span>PLEASE SELECT A DRAW MODE TO BEGIN </span>
             <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu first-menu-dropdown">
+            <ul class="dropdown-menu initial-selection-dropdown">
                 <li class="default"><a>Default</a></li>
                 <li class="random"><a>Random Colors</a></li>
                 <li class="increment"><a>Darken</a></li>
@@ -39,32 +40,34 @@
             </ul>
         </div>
     </div>
-    <div id="container" class="hidden-initially">
-        <div id="sketchpad-menu">
-            <div class="instructions">
-                <span class="btn btn-warning btn-sm instructions-text"><span class="glyphicon glyphicon-exclamation-sign">
-                </span> Hold down LEFT MOUSE BUTTON to draw!</span>
-            </div>
-            <button type="button" class="btn btn-sm btn-success brush-mode-button">Brush Type</button>
-            <button type="button" class="btn btn-danger btn-sm clear-button hidden-initially">Clear</button>
-            <button type="button" class="btn btn-primary btn-sm size-button hidden-initially">Change Board Size</button>
-            <div class="btn-group draw-mode-button">
-                <button type="button" class="btn btn-danger btn-sm dropdown-toggle dropdown-button" data-toggle="dropdown">
-                <span id="mode-menu-text"></span>
+
+    <div id="sketchpad-menu" class="hidden-initially">
+        <div class="btn-group draw-mode-menu">
+            <button type="button" class="btn btn-sm btn-success mode-menu-text">Default</button>
+            <button type="button" class="btn btn-sm btn-success dropdown-toggle draw-mode-dropdown" data-toggle="dropdown">
                 <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu pad-menu-mode">
-                    <li class="default"><a>Default</a></li>
-                    <li class="random"><a>Random Colors</a></li>
-                    <li class="increment"><a>Darken</a></li>
-                    <li class="trail"><a>Snake</a></li>
-                </ul>
-            </div>
+            </button>
+            <ul class="dropdown-menu pad-menu-mode">
+                <li class="default"><a>Default</a></li>
+                <li class="random"><a>Random Colors</a></li>
+                <li class="increment"><a>Darken</a></li>
+                <li class="trail"><a>Snake</a></li>
+            </ul>
         </div>
+
+        <button type="button" class="btn btn-danger btn-sm clear-button">Clear</button>
+        <button type="button" class="btn btn-primary btn-sm size-button">Board Size</button>
+
+        <div class="instructions">
+            <span class="btn btn-warning btn-sm instructions-text"><span class="glyphicon glyphicon-exclamation-sign">
+            </span> Hold down LEFT MOUSE BUTTON to draw!</span>
+        </div>
+    </div>
+
+    <div id="container" class="hidden-initially">
         <div id="sketchpad">
             <!-- squares will be added here -->
         </div>
-        
     </div>
     
 

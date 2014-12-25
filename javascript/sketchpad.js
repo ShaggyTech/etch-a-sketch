@@ -11,19 +11,19 @@ var keyIsDown = false;
 var $sketchpad = $("#sketchpad");
 var $square;
 var $instructions = $(".instructions-text");
-var $modeMenuText =  $("#mode-menu-text");
+var $modeMenuText =  $(".mode-menu-text");
 var $hiddenInitially = $(".hidden-initially");
 
 // will scroll down to the top of the menu div (i.e. anytime drawSketchpad() is called)
 var scrollToBoard = function(){
     $('html, body').animate({
-        scrollTop: $(".menu").offset().top
+        scrollTop: $("#sketchpad-menu").offset().top
     }, 400);
 }
 
 var clearBoard = function() {
-        $sketchpad.empty("span");
-        drawSketchpad(sketchpadWidth);
+    $sketchpad.empty();
+    drawSketchpad(sketchpadWidth);
 }
 
 // builds the sketchpad
@@ -36,10 +36,6 @@ var drawSketchpad = function(width) {
     var columnId = 0;
     var rowID = 0;
 
-    console.log("squareSize: " + squareSize);
-    console.log("totalColumns: " + totalColumns);
-    console.log("totalRows: " + totalRows);
-
     for (var x = 0; x < sketchpadWidth; x++) {
         sketchpadArray += '<span class="columns">';
         columnId++;
@@ -51,8 +47,7 @@ var drawSketchpad = function(width) {
         };
         rowID = 0;
     };
-    console.log(numSquares);
-    $sketchpad.empty("span");
+    $sketchpad.empty();
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
     $instructions.show();
@@ -60,30 +55,14 @@ var drawSketchpad = function(width) {
 
 // when first loading the page, first sketchpad created upon selection of draw mode
 var firstDrawMode = function() {
-    $(".first-menu-dropdown li").on("click", function(){
-        
-        if ($(".dropdown-button").hasClass("btn-danger")) { // if this is the first time we are drawing the board
-            $hiddenInitially.show().removeClass("hidden-initially"); // show all initially hidden buttons/divs
-            $(".dropdown-button").removeClass("btn-danger").addClass("btn-default"); // change the color of the left menu button to green
-            drawSketchpad(sketchpadWidth);  // create the initial board
-            centerSketchPad();
-            scrollToBoard();
-        };
+    $(".initial-selection-dropdown li").on("click", function(){
         $(".initial-selection").hide();
+        $(".hidden-initially").show();
+        drawSketchpad(sketchpadWidth);  // create the initial board
+        scrollToBoard();
     }); 
-
-
 }
 
-var centerSketchPad = function(){
-    var windowWidth = $(window).width();
-    var containerWidth = $("#container").outerWidth();
-    var padRight = (windowWidth - containerWidth) / 2;
-    $('#container').css({
-        position:'absolute',
-        right: padRight,
-    });
-}
 // changes the draw mode based on currently selected draw mode option
 var drawMode = function(mode){
     
@@ -243,9 +222,9 @@ var globalListeners = function(){
 
     });
 
-    $(window).resize(function(){
-      centerSketchPad();
-    });
+    //$(window).resize(function(){
+      //centerSketchPad();
+    //});
 }
 
 var listeners = function() {
