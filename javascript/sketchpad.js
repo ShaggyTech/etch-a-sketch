@@ -87,7 +87,7 @@ var drawMode = function(mode, selector){
 }
 
 var paintbrush = function(mode){
-    $sketchpad.on("mouseenter.draw", ".square", function(){
+    $sketchpad.on("mouseover.draw", ".square", function(){
         var rgb = getRGB($(this).css("background-color"));
         // these events DO NOT require the mouse button to be down
         if (mode === 4) {                                       // snake mode
@@ -152,6 +152,40 @@ var changeSize = function() {
     });
 }
 
+var colorPicker = function(){
+    $("#colorpicker").spectrum({
+        color: "#000",
+        showInput: true,
+        className: "full-spectrum",
+        showInitial: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        maxPaletteSize: 10,
+        preferredFormat: "hex",
+        move: function (color) {
+            
+        },
+        show: function () {
+        
+        },
+        beforeShow: function () {
+        
+        },
+        hide: function () {
+        
+        },
+        change: function() {
+            
+        },
+        palette: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+            "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
+            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+            "rgb(0, 255, 255)"]
+        ]
+    });
+}
+
 var buttonListeners = function(){
     $(".default").on("click", function() {
         drawModeID = 1; 
@@ -203,6 +237,7 @@ var listeners = function() {
     buttonListeners();
     changeSize();
     firstDrawMode();
+    colorPicker();
 }
 
 $(document).ready(function(){    

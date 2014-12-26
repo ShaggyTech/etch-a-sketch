@@ -180,7 +180,7 @@ a:hover {
     display: block;
     text-align: center;
     position: relative;
-    top: -16px;
+    top: -45px;
     left: 220px;
 }
 
@@ -190,6 +190,19 @@ a:hover {
     pointer-events: none;
     cursor: default;
     color: rgb(222, 222, 222);
+}
+
+.full-spectrum .sp-palette {
+    max-width: 150px;
+}
+
+#colorpicker-container {
+    display: block;
+    position: relative;
+    width: 110px;
+    top: -13px;
+    left: 10px;
+    overflow: hidden;
 }
 
 #sketchpad {
