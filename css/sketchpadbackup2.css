@@ -123,76 +123,79 @@ a:hover {
     margin-bottom: 50px;
     height: 760px;
     width: 760px;
-    background-color: black;
+    background-color: rgb(255, 0, 0);
     font-family: "Arial Black", Gadget, sans-serif;
     color: rgb(255, 10, 10);
 }
 
 #sketchpad-menu {
     margin: auto;
+    /* position: absolute; */
     width: 760px;
-    height: 75px;
+    height: 85px;
+    /* top: -85px; */
+
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     background: rgba(82,82,82,1);
-        background: -moz-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
-        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(82,82,82,1)), color-stop(100%, rgba(0,0,0,1)));
-        background: -webkit-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
-        background: -o-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
-        background: -ms-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
-        background: radial-gradient(ellipse at center, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525252', endColorstr='#000000', GradientType=1 );
+    background: -moz-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(82,82,82,1)), color-stop(100%, rgba(0,0,0,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(82,82,82,1) 0%, rgba(0,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525252', endColorstr='#000000', GradientType=1 );
 }
 
-.draw-mode-menu {
-    display: block;
-    position: relative;
+.clear-button,
+.brush-mode-button,
+.size-button,
+.draw-mode-button
+{   
     top: 10px;
-    left: 10px;
+    position: relative;
+    font-weight: bold;
 }
 
-.draw-mode-dropdown {
-    width: 40px;
-    background-color: rgba(92, 184, 92, 0.41);
+.brush-mode-button,
+.draw-mode-button {
+    top: 10px;
 }
 
-.mode-menu-text {
-    width: 130px;
-    pointer-events: none;
+.brush-mode-button {
+    width: 96px;
+}
+
+.draw-mode-button {
+    /* left: 100px; */
 }
 
 .clear-button {
-    display: block;
-    position: relative;
-    top: 45px;
-    left: 525px;
+    /* top: 10px; */
+    /* right: 10px; */
 }
 
 .size-button {
-    display: block;
-    position: relative;
-    top: -20px;
-    left: 659px;
+    /* top: 10px; */
+    /* right: 10px; */
 }
 
 .instructions {
-    width: 320px;
-    display: block;
+    width: 330px;
     text-align: center;
     position: relative;
-    top: -16px;
-    left: 220px;
+    top: 25px;
+    left: 221px;
 }
 
 .instructions-text {
-    border: 3px solid rgba(49, 51, 66, 0.16);
-    background-color: rgba(255, 255, 255, 0.09);
     pointer-events: none;
     cursor: default;
-    color: rgb(222, 222, 222);
+    color: black;
 }
 
 #sketchpad {
+    /* margin-top: 10px; */
     margin-left: auto;
     margin-right: auto;
     width: 740px;
