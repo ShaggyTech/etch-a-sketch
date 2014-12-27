@@ -59,11 +59,16 @@
         <button type="button" class="btn btn-danger btn-sm clear-button">Clear</button>
         <button type="button" class="btn btn-primary btn-sm size-button">Board Size</button>
 
-        <div id="colorpicker-container" class="btn-group">
+        <div id="colorpicker-container" class="btn-group disabled">
             <button type="button" class="btn btn-sm btn-default">Color: </button>
             <input type="text" id="colorpicker" />
         </div>
-        
+
+        <div id="grid">
+            <input id="grid-checkbox" type="checkbox" checked="true">
+            <span>Grid</span>
+        </div>
+
         <div class="instructions">
             <span class="btn btn-warning btn-sm instructions-text"><span class="glyphicon glyphicon-exclamation-sign">
             </span> Hold down LEFT MOUSE BUTTON to draw!</span>

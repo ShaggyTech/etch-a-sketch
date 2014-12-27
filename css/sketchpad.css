@@ -180,7 +180,7 @@ a:hover {
     display: block;
     text-align: center;
     position: relative;
-    top: -45px;
+    top: -75px;
     left: 220px;
 }
 
@@ -205,6 +205,37 @@ a:hover {
     overflow: hidden;
 }
 
+#colorpicker-container > .btn-default {
+    pointer-events: none;
+}
+
+#grid {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 66px;
+    top: -77px;
+    height: 28px;
+    left: 586px;
+    background-color: #5BC0DE;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    color: white;
+    border-color: #46B8DA;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#grid > span {
+    pointer-events: none;
+}
+
+input[type=checkbox] {
+    margin: 0px !important;
+}
+
 #sketchpad {
     margin-left: auto;
     margin-right: auto;
@@ -224,9 +255,18 @@ a:hover {
     -ms-user-select: none;
 }
 
+.square-nogrid {
+    outline: none;
+}
+
 .columns {
     float: left;
     clear: right;
+}
+
+.disabled {
+    opacity: 0;
+    pointer-events: none;
 }
 
 footer {

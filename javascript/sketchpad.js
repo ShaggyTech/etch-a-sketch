@@ -50,6 +50,7 @@ var drawSketchpad = function(width) {
     $sketchpad.empty();
     $sketchpad.append(sketchpadArray);
     $square = $(".square");     // cache the .square selector only after all squares have been added to the page
+    squareGridToggle();
     $instructions.show();
 }
 
@@ -68,9 +69,11 @@ var drawMode = function(mode, selector){
     $sketchpad.off(".draw");
     $(".dropdown-menu > li").show();
     selector.hide();
+    $("#colorpicker-container").addClass("disabled");
     switch(mode)
     {        
         case 1: $modeMenuText.text("Default");
+                $("#colorpicker-container").removeClass("disabled");
                 paintbrush(mode);
                 break;
         case 2: $modeMenuText.text("Random Colors");
@@ -103,7 +106,8 @@ var paintbrush = function(mode){
             if (keyIsDown) {
                 $instructions.hide();                           // default mode
                 if (mode === 1) {
-                    $(this).css("background-color", "black");
+                    var color = $("#colorpicker").spectrum("get").toHexString();
+                    $(this).css("background-color", color);
                 }
                 else if (mode === 2) {                          // random color mode
                     var color = randomColor();
@@ -156,27 +160,12 @@ var colorPicker = function(){
     $("#colorpicker").spectrum({
         color: "#000",
         showInput: true,
-        className: "full-spectrum",
+        className: "spectrum-replacer",
         showInitial: true,
         showPalette: true,
         showSelectionPalette: true,
         maxPaletteSize: 10,
         preferredFormat: "hex",
-        move: function (color) {
-            
-        },
-        show: function () {
-        
-        },
-        beforeShow: function () {
-        
-        },
-        hide: function () {
-        
-        },
-        change: function() {
-            
-        },
         palette: [
             ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
             "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
@@ -184,6 +173,15 @@ var colorPicker = function(){
             "rgb(0, 255, 255)"]
         ]
     });
+}
+
+var squareGridToggle = function(){
+    if ($("#grid-checkbox").is(":checked")) {
+        $(".square").removeClass("square-nogrid");
+    }
+    else {
+        $(".square").addClass("square-nogrid")
+    };
 }
 
 var buttonListeners = function(){
@@ -205,6 +203,9 @@ var buttonListeners = function(){
     });
     $(".clear-button").on("click", function(){
         clearBoard();
+    });
+    $("#grid-checkbox").on("click", function(){
+        squareGridToggle();
     });
 }
 
@@ -228,7 +229,6 @@ var globalListeners = function(){
             keyIsDown = false;
             $(this).css('cursor','pointer');
         });    
-
     });
 }
 
