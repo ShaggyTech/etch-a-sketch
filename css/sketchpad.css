@@ -136,7 +136,8 @@ a:hover {
 .size-button,
 .instructions,
 #colorpicker-container,
-#grid
+#grid,
+.brush-mode
 {
     display: block;
     position: relative;
@@ -168,14 +169,14 @@ a:hover {
 }
 
 .instructions {
-    top: -75px;
+    top: -102px;
     left: 220px;
     width: 320px;
     text-align: center;
 }
 
 .instructions-text {
-    color: rgb(222, 222, 222);
+    color: rgb(252, 238, 0);
     background-color: rgba(255, 255, 255, 0.09);
     border: 3px solid rgba(49, 51, 66, 0.16);
     pointer-events: none;
@@ -222,6 +223,12 @@ input[type=checkbox] {
     margin: 0px !important;
 }
 
+.brush-mode {
+    top: -70px;
+    left: 538px;
+    width: 150px;
+}
+
 #container {
     height: 760px;
     width: 760px;
@@ -263,7 +270,7 @@ input[type=checkbox] {
 }
 
 .disabled {
-    opacity: 0;
+    opacity: 0.30 !important;
     pointer-events: none;
 }
 

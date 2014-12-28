@@ -5,7 +5,8 @@ var drawModeID = 100;
 var totalColumns;
 var totalRows;
 var numSquares;
-var keyIsDown = false;
+var mouseIsDown = false;
+var brushmode = 1;
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
@@ -70,6 +71,7 @@ var drawMode = function(mode, selector){
     $(".dropdown-menu > li").show();
     selector.hide();
     $("#colorpicker-container").addClass("disabled");
+    $(".brush-mode").removeClass("disabled");
     switch(mode)
     {        
         case 1: $modeMenuText.text("Default");
@@ -83,16 +85,20 @@ var drawMode = function(mode, selector){
                 paintbrush(mode);
                 break;
         case 4: $modeMenuText.text("Snake");
+                $(".brush-mode").addClass("disabled");
                 paintbrush(mode);
                 break;
         default: break;
     }
 }
 
+// !!!!!!!!!!!!!!!!!!!!!!!
+// Need to work on this function so that I'm not repeating code in both brushmodes...DRY!
 var paintbrush = function(mode){
     $sketchpad.on("mouseover.draw", ".square", function(){
         var rgb = getRGB($(this).css("background-color"));
-        // these events DO NOT require the mouse button to be down
+
+        // these events DO NOT require the mouse button to be down or clicked
         if (mode === 4) {                                       // snake mode
             squareColor = $(this).css("background-color");
             $(this).css("background-color", rgb);
@@ -101,28 +107,55 @@ var paintbrush = function(mode){
             });
             $instructions.hide();
         }
-        // these events DO require the mouse button to be down
+        // these events DO require the mouse button to be down or clicked
         else {
-            if (keyIsDown) {
-                $instructions.hide();                           // default mode
-                if (mode === 1) {
-                    var color = $("#colorpicker").spectrum("get").toHexString();
-                    $(this).css("background-color", color);
-                }
-                else if (mode === 2) {                          // random color mode
-                    var color = randomColor();
-                    $(this).css("background-color", color);
-                }
-                else if (mode === 3) {                          // darken mode
-                    for(var i = 0; i < rgb.length; i++){
-                        rgb[i] = Math.max(0, rgb[i] - 10);
+            // paint mode, hold mouse down to draw across multiple squares
+            if (brushmode === 1) {
+                if (mouseIsDown) {
+                    $(this).css('cursor','url(./img/paintbrush.png),auto');
+                    $instructions.hide();
+                    if (mode === 1) {                               // default mode
+                        var color = $("#colorpicker").spectrum("get").toHexString();
+                        $(this).css("background-color", color);
                     }
-                    var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-                    $(this).css("background-color", newColor);
+                    else if (mode === 2) {                          // random color mode
+                        var color = randomColor();
+                        $(this).css("background-color", color);
+                    }
+                    else if (mode === 3) {                          // darken mode
+                        for(var i = 0; i < rgb.length; i++){
+                            rgb[i] = Math.max(0, rgb[i] - 10);
+                        }
+                        var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+                        $(this).css("background-color", newColor);
+                    }
+                }
+                else {
+                    $(this).css('cursor','pointer');
+                    $instructions.show().text("HOLD left mouse button to draw!");
                 }
             }
-            else {
-                $instructions.show();
+            // precision mode, click mouse to draw on a single square at a time
+            else if (brushmode === 2) {
+                $instructions.show().text("CLICK left mouse button to draw!");
+                $(this).css('cursor','url(./img/paintbrush.png),auto');
+                $square.on("click", function(){
+                    if (mode === 1) {                               // default mode
+                        var color = $("#colorpicker").spectrum("get").toHexString();
+                        $(this).css("background-color", color);
+                    }
+                    else if (mode === 2) {                          // random color mode
+                        var color = randomColor();
+                        $(this).css("background-color", color);
+                    }
+                    else if (mode === 3) {                          // darken mode
+                        for(var i = 0; i < rgb.length; i++){
+                            rgb[i] = Math.max(0, rgb[i] - 10);
+                        }
+                        var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+                        $(this).css("background-color", newColor);
+                    }
+                });
             }
         }
     });
@@ -175,6 +208,19 @@ var colorPicker = function(){
     });
 }
 
+var isMouseDown = function(){
+    // tells us whether the left mouse is being held down
+    $sketchpad.on("mouseover", ".square", function(){
+        $(this).on("mousedown", function(event){
+            if (event.which == 1) {
+                mouseIsDown = true;
+            }
+        }).on("mouseup", function(){
+            mouseIsDown = false;
+        });    
+    });
+}
+
 var squareGridToggle = function(){
     if ($("#grid-checkbox").is(":checked")) {
         $(".square").removeClass("square-nogrid");
@@ -182,6 +228,17 @@ var squareGridToggle = function(){
     else {
         $(".square").addClass("square-nogrid")
     };
+}
+
+var brushModeToggle = function(){
+    if (brushmode === 1) {
+        $(".brush-mode").text("Brush Mode: Precise");
+        brushmode = 2;
+    }
+    else if (brushmode === 2) {
+        $(".brush-mode").text("Brush Mode: Paint");
+        brushmode = 1;
+    }
 }
 
 var buttonListeners = function(){
@@ -207,6 +264,9 @@ var buttonListeners = function(){
     $("#grid-checkbox").on("click", function(){
         squareGridToggle();
     });
+    $(".brush-mode").on("click", function(){
+        brushModeToggle();
+    });
 }
 
 var globalListeners = function(){
@@ -217,19 +277,6 @@ var globalListeners = function(){
 
     // makes sure these divs and buttons are initially hidden
     $(".hidden-initially").hide();
-
-    // tells us whether the left mouse is being held down
-    $sketchpad.on("click", function(){
-        $(this).on("mousedown", function(event){
-            if (event.which == 1) {
-                keyIsDown = true;
-                $(this).css('cursor','url(./img/paintbrush.png),auto');
-            }
-        }).on("mouseup", function(){
-            keyIsDown = false;
-            $(this).css('cursor','pointer');
-        });    
-    });
 }
 
 var listeners = function() {
@@ -238,6 +285,7 @@ var listeners = function() {
     changeSize();
     firstDrawMode();
     colorPicker();
+    isMouseDown();
 }
 
 $(document).ready(function(){    
