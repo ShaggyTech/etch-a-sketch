@@ -7,10 +7,11 @@ var totalRows;
 var numSquares;
 var mouseIsDown = false;
 var brushmode = 1;
+var $thisSquare;
+var $square;
 
 // cache selectors for performance and speed reasons
 var $sketchpad = $("#sketchpad");
-var $square;
 var $instructions = $(".instructions-text");
 var $modeMenuText =  $(".mode-menu-text");
 var $hiddenInitially = $(".hidden-initially");
@@ -92,13 +93,12 @@ var drawMode = function(mode, selector){
     }
 }
 
-// !!!!!!!!!!!!!!!!!!!!!!!
-// Need to work on this function so that I'm not repeating code in both brushmodes...DRY!
+// called by drawmode()
 var paintbrush = function(mode){
     $sketchpad.on("mouseover.draw", ".square", function(){
+        $thisSquare = $(this);
         var rgb = getRGB($(this).css("background-color"));
-
-        // these events DO NOT require the mouse button to be down or clicked
+        // these modes DO NOT require the mouse button to be down or clicked
         if (mode === 4) {                                       // snake mode
             squareColor = $(this).css("background-color");
             $(this).css("background-color", rgb);
@@ -107,58 +107,50 @@ var paintbrush = function(mode){
             });
             $instructions.hide();
         }
-        // these events DO require the mouse button to be down or clicked
+        // these modes DO require the mouse button to be down or clicked
         else {
-            // paint mode, hold mouse down to draw across multiple squares
+            // paint mode, HOLD mouse down to draw across multiple squares
             if (brushmode === 1) {
                 if (mouseIsDown) {
                     $(this).css('cursor','url(./img/paintbrush.png),auto');
                     $instructions.hide();
-                    if (mode === 1) {                               // default mode
-                        var color = $("#colorpicker").spectrum("get").toHexString();
-                        $(this).css("background-color", color);
-                    }
-                    else if (mode === 2) {                          // random color mode
-                        var color = randomColor();
-                        $(this).css("background-color", color);
-                    }
-                    else if (mode === 3) {                          // darken mode
-                        for(var i = 0; i < rgb.length; i++){
-                            rgb[i] = Math.max(0, rgb[i] - 10);
-                        }
-                        var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-                        $(this).css("background-color", newColor);
-                    }
+                    drawModeSwitch(mode);
                 }
                 else {
                     $(this).css('cursor','pointer');
                     $instructions.show().text("HOLD left mouse button to draw!");
                 }
             }
-            // precision mode, click mouse to draw on a single square at a time
+            // precision mode, CLICK mouse to draw on a single square at a time
             else if (brushmode === 2) {
+                $thisSquare.off(".draw");
                 $instructions.show().text("CLICK left mouse button to draw!");
-                $(this).css('cursor','url(./img/paintbrush.png),auto');
-                $square.on("click", function(){
-                    if (mode === 1) {                               // default mode
-                        var color = $("#colorpicker").spectrum("get").toHexString();
-                        $(this).css("background-color", color);
-                    }
-                    else if (mode === 2) {                          // random color mode
-                        var color = randomColor();
-                        $(this).css("background-color", color);
-                    }
-                    else if (mode === 3) {                          // darken mode
-                        for(var i = 0; i < rgb.length; i++){
-                            rgb[i] = Math.max(0, rgb[i] - 10);
-                        }
-                        var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-                        $(this).css("background-color", newColor);
-                    }
+                $(this).css('cursor','crosshair');
+                $thisSquare.on("click.draw", function(){
+                    drawModeSwitch(mode);
                 });
             }
         }
     });
+    // separate function shared by both brushmodes
+    var drawModeSwitch = function(mode){
+        if (mode === 1) {                               // default mode
+            var color = $("#colorpicker").spectrum("get").toHexString();
+            $thisSquare.css("background-color", color);
+        }
+        else if (mode === 2) {                          // random color mode
+            var color = randomColor();
+            $thisSquare.css("background-color", color);
+        }
+        else if (mode === 3) {                          // darken mode
+            var rgb = getRGB($thisSquare.css("background-color"));
+            for(var i = 0; i < rgb.length; i++) {
+                rgb[i] = Math.max(0, rgb[i] - 10);
+            }
+            var newColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+            $thisSquare.css("background-color", newColor);
+        }
+    }
 }
 
 // get the new size, input by the user by clicking the "Change Board Size" button
@@ -166,11 +158,11 @@ var changeSize = function() {
     $(".size-button").on("click", function(){
         // prompt the user for a new size
         var newSize = prompt("Please enter desired squares per row for the sketch board.\nMin: 1 | Max: 64\nLeave blank for default size.");
-        // if the prompt is left blank then resize to default size
+        // if "cancel" is clicked in the prompt then don't do anything
         if (newSize === null) {
             return;
         }
-        // if prompt is left blank the use default size
+        // if prompt is left blank then use default size
         else if (newSize === ""){
             sketchpadWidth = defaultSketchpadWidth;
             $sketchpad.empty();
@@ -189,6 +181,7 @@ var changeSize = function() {
     });
 }
 
+// creates a color picker via the spectrum.js plugin
 var colorPicker = function(){
     $("#colorpicker").spectrum({
         color: "#000",
@@ -208,8 +201,8 @@ var colorPicker = function(){
     });
 }
 
+// tells us whether the left mouse is being held down
 var isMouseDown = function(){
-    // tells us whether the left mouse is being held down
     $sketchpad.on("mouseover", ".square", function(){
         $(this).on("mousedown", function(event){
             if (event.which == 1) {
@@ -230,7 +223,9 @@ var squareGridToggle = function(){
     };
 }
 
+// toggle "paint" and "precise" brush modes
 var brushModeToggle = function(){
+    paintbrush(drawModeID);
     if (brushmode === 1) {
         $(".brush-mode").text("Brush Mode: Precise");
         brushmode = 2;
