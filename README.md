@@ -1,3 +1,3 @@
 etch-a-sketch
 =============
-See it live at [vdubmsatertech@github.io](vdubmastertech.github.io)
+See it live at [vdubmsatertech.github.io/etch-a-sketch](vdubmastertech.github.io/etch-a-sketch)
